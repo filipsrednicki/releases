@@ -1,0 +1,159 @@
+.upcoming-container {
+  height: 100%;
+  position: relative;
+  padding-top: 140px;
+  transition: all 0.4s ease-in-out;
+}
+
+.upcoming {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-flow: wrap;
+  margin: 0 auto 40px;
+  padding-top: 20px;
+  justify-content: center;
+}
+
+.upcoming-head {
+  display: flex;
+  position: relative;
+  align-items: flex-end;
+  width: 90%;
+  margin: auto;
+  border-bottom: 3px solid;
+  background-color: #1a1a1d;
+  border-radius: 12px;
+}
+
+.upcoming-head h2 {
+  margin: 0 0 10px;
+  padding: 5px 30px 0;
+  position: relative;
+}
+
+.upcoming-link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.upcoming-link h3 {
+  margin: 20px 10px 10px;
+}
+
+.upcoming-movies,
+.upcoming-shows {
+  background-color: #1a1a1d;
+  position: relative;
+  width: 320px;
+  margin: 10px;
+  border-radius: 10px;
+  z-index: 0;
+  transition: box-shadow 0.4s ease-in-out;
+}
+
+.upcoming-movies:hover,
+.upcoming-shows:hover {
+  box-shadow: 0 0 12px 2px #ecba5c;
+}
+
+.upcoming-movies .upcoming-link,
+.upcoming-shows .upcoming-link {
+  height: 100%;
+  display: flex;
+}
+
+.upcoming-movies .upcoming-link .upcoming-info,
+.upcoming-shows .upcoming-link .upcoming-info {
+  width: 50%;
+  margin: 0 auto;
+  padding: 0 5px;
+}
+
+.upcoming-movies img,
+.upcoming-movies .img-missing,
+.upcoming-shows img,
+.upcoming-shows .img-missing {
+  width: 50%;
+  border-radius: 10px 0 0 10px;
+}
+
+.img-missing {
+  background-color: #1e1e21;
+  padding-top: 40px;
+  color: #383838;
+  font-weight: bold;
+}
+
+.img-missing .fa-image {
+  font-size: 5em;
+}
+
+.upcoming-movies button,
+.upcoming-shows button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 5px 0;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5em;
+  justify-self: right;
+  border-radius: 10px 0 10px 0px;
+  transition: all 0.4s ease-in-out;
+}
+
+.upcoming-games {
+  background-color: #1a1a1d;
+  max-width: 400px;
+  min-width: 280px;
+  margin: 10px;
+  border-radius: 10px;
+  z-index: 0;
+  position: relative;
+}
+
+.upcoming-games .upcoming-link {
+  display: grid;
+  grid-template: 220px minmax(100px, auto) / minmax(270px, 400px);
+}
+
+.upcoming-games:hover {
+  box-shadow: 0 0 10px 5px #ecba5c;
+}
+
+.upcoming-games img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+
+.upcoming-games .img-missing {
+  width: 100%;
+  height: 100%;
+}
+
+.upcoming-games .img-missing .fa-image {
+  font-size: 6em;
+}
+
+.upcoming-games .img-missing p {
+  font-size: 1.5em;
+}
+
+.upcoming-games .upcoming-info {
+  margin-bottom: 10px;
+  padding: 5px 40px;
+}
+
+.upcoming-games button {
+  padding: 5px 0;
+  position: absolute;
+  font-size: 1.5em;
+  bottom: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px 0 10px 0;
+}
