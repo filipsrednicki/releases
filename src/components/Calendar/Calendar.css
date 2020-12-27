@@ -48,6 +48,32 @@
   border-radius: 30px 12px 12px 30px;
 }
 
+.open-all,
+.close-all {
+  color: #FFF;
+  margin-top: 25px;
+  padding: 4px 8px;
+  background-color: #1a1a1d;
+  font-weight: 900;
+}
+
+.open-all:hover,
+.close-all:hover {
+  background-color: #474232;
+}
+
+.open-all {
+  border-radius: 12px 0 0 12px;
+  border-right: 1px solid #f0a211;
+  border-left: 2px solid #f0a211;
+}
+
+.close-all {
+  border-radius: 0 12px 12px 0;
+  border-right: 2px solid #f0a211;
+  border-left: 1px solid #f0a211;
+}
+
 .calendar-view {
   display: none;
   position: fixed;
@@ -72,7 +98,7 @@
 
 .month-container {
   display: grid;
-  margin: 50px 5px;
+  margin: 25px 5px 50px;
   grid-template-columns: repeat(7, 1fr);
 }
 

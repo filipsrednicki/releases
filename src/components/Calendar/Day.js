@@ -3,13 +3,20 @@ import EntriesAmount from "./EntriesAmount";
 import { Link } from "react-router-dom";
 import { useDatabase } from "../../context/DatabaseContext";
 
-const Day = ({ arrayOfDays, monthInfo }) => {
+const Day = ({ arrayOfDays, monthInfo, allDaysOpen }) => {
   const { setDeleteEntry } = useDatabase();
   const [openDays, setOpenDays] = useState([]);
 
   useEffect(() => {
     setOpenDays([]);
   }, [arrayOfDays]);
+
+  useEffect(() => {
+    if(!allDaysOpen) {
+      return
+    }
+    setOpenDays(allDaysOpen)
+  }, [allDaysOpen])
 
   const checkDayContent = (i, content) => {
     if (!content.length) {

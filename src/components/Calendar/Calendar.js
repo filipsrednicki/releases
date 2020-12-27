@@ -13,6 +13,8 @@ const Calendar = () => {
   const [monthInWeeks, setMonthInWeeks] = useState("");
   const [isCalendarInWeeks, setIsCalendarInWeeks] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [openDays, setOpenDays] = useState([]);
+  const [allDaysOpen, setAllDaysOpen] = useState([]);
 
   const { list, isListLoading, listError } = useDatabase();
   const currentDay = useRef("");
@@ -227,6 +229,16 @@ const Calendar = () => {
     createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
   };
 
+  const openAllDays = () => {
+    let daysWithContent = []
+    selectedMonth.forEach((day, i) => {
+      if(day.content.length > 0) {
+        daysWithContent.push(i)
+      }
+    })
+    setAllDaysOpen(daysWithContent)
+  }
+
   return (
     <div className="calendar">
       <div className="selected-month">
@@ -240,6 +252,13 @@ const Calendar = () => {
           <i className="fas fa-long-arrow-alt-right"></i>
         </button>
       </div>
+
+      {(!isCalendarInWeeks || windowWidth > 800) && (
+        <>
+          <button className="open-all" onClick={openAllDays}>Open All</button>        
+          <button className="close-all" onClick={() => setAllDaysOpen([])}>Close All</button>     
+        </>
+      )}
 
       <button
         className="calendar-view"
@@ -257,7 +276,7 @@ const Calendar = () => {
             <CalendarInWeeks monthInWeeks={monthInWeeks} />
           ) : (
             <div className="month-container" ref={monthRef}>
-              <Day arrayOfDays={selectedMonth} monthInfo={monthInfo}/>
+              <Day arrayOfDays={selectedMonth} monthInfo={monthInfo} openDays={openDays} setOpenDays={setOpenDays} allDaysOpen={allDaysOpen} setAllDaysOpen={setAllDaysOpen}/>
             </div>
           )}
         </>
