@@ -488,11 +488,23 @@ form .alert .error-msg {
   transform: translateY(-50%);
 }
 
-.not-authorized {
-  margin-top: 140px;
+.not-authorized,
+.not-found-page {
+  margin-top: 120px;
   height: 100%;
   width: 100%;
-  padding: 5px;
+  padding: 5px 5px 50px;
+}
+
+.not-found-page h1 {
+  font-size: 6em;
+  margin: 0;
+}
+
+.not-found-page p {
+  font-size: 1.5em;
+  margin: 0;
+  font-weight: bold;
 }
 
 /**********/

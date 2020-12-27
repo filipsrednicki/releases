@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Calendar from "./Calendar/Calendar";
 import Details from "./Details/Details";
 import Upcoming from "./Upcoming/Upcoming";
 import Authentication from "./Authentication";
 import NotAuthorized from "./NotAuthorized";
+import NotFoundPage from "./NotFoundPage";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import ErrorModal from "./Modal/ErrorModal";
@@ -33,12 +34,15 @@ const App = () => {
           {authMode && <Authentication/>}
           {errorModal && <ErrorModal/>}
           {deleteEntry && <ConfirmDelModal/>}
-          <Route
-            path="/calendar/:date?"
-            render={() => (user ? <Calendar /> : <NotAuthorized />)}
-          />
-          <Route exact path="/" component={Upcoming} />
-          <Route path="/details/:id" component={Details} />
+          <Switch>
+            <Route
+              path="/calendar/:date?"
+              render={() => (user ? <Calendar /> : <NotAuthorized />)}
+            />
+            <Route exact path="/" component={Upcoming} />
+            <Route path="/details/:id" component={Details} />
+            <Route path="*" component={NotFoundPage} />
+          </Switch>
           <Footer />
         </>
       )}
