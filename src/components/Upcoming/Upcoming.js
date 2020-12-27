@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import UpcomingEntries from "./UpcomingEntries";
 import Categories from "../Categories";
-import ErrorNotification from "../ErrorNotification";
+import ErrorNotification from "../Errors/ErrorNotification";
 import Loader from "react-loader-spinner";
 import "./Upcoming.css";
 

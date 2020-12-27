@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import CalendarInWeeks from "./CalendarInWeeks";
 import Day from "./Day";
-import ErrorNotification from "../ErrorNotification";
+import ErrorNotification from "../Errors/ErrorNotification";
 import { useHistory, useParams } from "react-router-dom";
 import { useDatabase } from "../../context/DatabaseContext";
 import Loader from "react-loader-spinner";

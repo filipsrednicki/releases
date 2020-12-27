@@ -1,5 +1,5 @@
 import React from "react";
-import ErrorNotification from "../ErrorNotification";
+import ErrorNotification from "../Errors/ErrorNotification";
 import Modal from "./Modal"
 import { useDatabase } from "../../context/DatabaseContext";
 import Loader from "react-loader-spinner";

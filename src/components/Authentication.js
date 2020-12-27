@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import ErrorNotification from "./ErrorNotification";
+import ErrorNotification from "./Errors/ErrorNotification";
 import Modal from "./Modal/Modal"
 import Loader from "react-loader-spinner";
 import { useHistory } from "react-router-dom";

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import DetailsTv from "./DetailsTv";
 import DetailsMovie from "./DetailsMovie";
 import DetailsGame from "./DetailsGame";
-import ErrorNotification from "../ErrorNotification";
+import ErrorNotification from "../Errors/ErrorNotification";
 import { useParams } from "react-router-dom";
 import { useDatabase } from "../../context/DatabaseContext";
 import Loader from "react-loader-spinner";
