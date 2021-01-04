@@ -713,6 +713,9 @@ form .alert .error-msg {
     align-self: center;
     margin: 20px 0;
   }
+  .episodes-list {
+    margin: 16px 5px;
+  }
   .content-main {
     height: 100%;
   }
