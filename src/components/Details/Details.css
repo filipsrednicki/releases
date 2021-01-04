@@ -72,7 +72,7 @@
 }
 
 .details-info {
-  padding: 40px 0 20px 40px;
+  padding: 40px 40px 20px 40px;
   z-index: 99;
   position: relative;
   background-color: #1a1a1d;
@@ -167,6 +167,89 @@
 
 .readmore-btn:hover {
   color: #ecba5c;
+}
+
+.seasons-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+
+.previous-season, .next-season {
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  font-style: italic;
+}
+
+.previous-season:hover, .next-season:hover {
+  color: #f0a211;
+}
+
+.seasons-list li  {
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background-color: #26262a;
+  margin: 4px;
+  font-weight: 500;
+}
+
+.highlighted {
+  color: #f0a211;
+  box-shadow: 0 0 3px 1px #f0a211;
+}
+
+.seasons-list li:hover {
+  background-color: #474232;
+}
+
+.episodes-list li {
+  border-left: 2px solid #26262a;
+  border-right: 2px solid #26262a;
+  border-bottom: 1px solid #f0a211;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.episodes-list .ep-name {
+  justify-self: start;
+  font-weight: 500;
+  text-overflow: ellipsis;
+}
+
+.episodes-list .ep-date {
+  justify-self: end;
+  font-style: italic;
+}
+
+.episodes-list img {
+  margin-bottom: 10px;
+  max-height: 113px;
+}
+
+.episodes-list li:first-child {
+  border-top: 2px solid #26262a;
+  border-radius: 10px 10px 0 0;
+}
+
+.episodes-list li:last-child {
+  border-bottom: 2px solid #26262a;
+  border-radius: 0 0 10px 10px;
+}
+
+.episodes-list div {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+
+.episodes-list p {
+  text-align: left;
+  margin: 5px 15px;
 }
 
 /* GAME DETAILS IMAGE */
