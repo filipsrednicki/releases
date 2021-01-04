@@ -716,6 +716,10 @@ form .alert .error-msg {
   .episodes-list {
     margin: 16px 5px;
   }
+  .episodes-list div:not(:first-child) {
+    flex-direction: column;
+    align-items: center;
+  }
   .content-main {
     height: 100%;
   }
@@ -773,6 +777,10 @@ form .alert .error-msg {
   }
   .not-authorized {
     font-size: 0.9em;
+  }
+  .episodes-list div {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
