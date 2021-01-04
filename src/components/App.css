@@ -707,6 +707,7 @@ form .alert .error-msg {
   }
   .details-info {
     padding-left: 0;
+    padding-right: 0;
   }
   .details-info button {
     align-self: center;
