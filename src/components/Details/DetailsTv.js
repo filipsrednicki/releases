@@ -4,6 +4,7 @@ import ContentList from "./ContentList";
 import AddDelBtn from "../AddDelBtn";
 import ReadMore from "./ReadMore";
 import Image from "../Image";
+import ErrorNotification from "../Errors/ErrorNotification";
 import { useDatabase } from "../../context/DatabaseContext";
 import Loader from "react-loader-spinner";
 
@@ -11,6 +12,7 @@ const DetailsTv = () => {
   const { details } = useDatabase();
   const [seasonDetails, setSeasonsDetails] = useState(null);
   const [seasonLoading, setSeasonLoading] = useState(false);
+  const [seasonError, setSeasonError] = useState(null);
   const [episodeLoading, setEpisodeLoading] = useState(false);
   const [overview, setOverview] = useState(null);
   const episodesListRef = useRef();
@@ -22,6 +24,7 @@ const DetailsTv = () => {
     }
     setSeasonLoading(true);
     setOverview(null);
+    setSeasonError(null);
     const id = details.id.slice(1, details.id.length);
 
     fetch(
@@ -42,6 +45,7 @@ const DetailsTv = () => {
         setSeasonLoading(false);
       })
       .catch((err) => {
+        setSeasonError(err.message);
         setSeasonLoading(false);
       });
   };
@@ -122,6 +126,7 @@ const DetailsTv = () => {
               ))}
             </ul>
           </div>
+
           <Loader
             type="ThreeDots"
             color="#f0a211"
@@ -129,6 +134,11 @@ const DetailsTv = () => {
             height={120}
             width={120}
           />
+
+          {seasonError && 
+            <ErrorNotification errMsg={seasonError} />
+          }
+
           <ul className="episodes-list" ref={episodesListRef}>
             {seasonDetails &&
               !seasonLoading &&
