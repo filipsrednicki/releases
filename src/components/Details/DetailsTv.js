@@ -109,8 +109,9 @@ const DetailsTv = () => {
                   onClick={() => checkSeasonDetails(season.season_number)}
                   className={
                     seasonDetails &&
-                    season.season_number === seasonDetails.season_number ?
-                    "highlighted" : undefined
+                    season.season_number === seasonDetails.season_number
+                      ? "highlighted"
+                      : undefined
                   }
                 >
                   <div>
@@ -161,22 +162,28 @@ const DetailsTv = () => {
 
           {seasonDetails && (
             <>
-              <span
-                className="previous-season"
-                onClick={() =>
-                  checkSeasonDetails(seasonDetails.season_number - 1)
-                }
-              >
-                Previous season
-              </span>
-              <span
-                className="next-season"
-                onClick={() =>
-                  checkSeasonDetails(seasonDetails.season_number + 1)
-                }
-              >
-                Next season
-              </span>
+              {(seasonDetails.season_number > 1 ||
+                (details.seasons[0].season_number === 0 &&
+                  seasonDetails.season_number === 1)) && (
+                <span
+                  className="previous-season"
+                  onClick={() =>
+                    checkSeasonDetails(seasonDetails.season_number - 1)
+                  }
+                >
+                  Previous season
+                </span>
+              )}
+              {seasonDetails.season_number !== details.number_of_seasons && (
+                <span
+                  className="next-season"
+                  onClick={() =>
+                    checkSeasonDetails(seasonDetails.season_number + 1)
+                  }
+                >
+                  Next season
+                </span>
+              )}
             </>
           )}
         </div>
