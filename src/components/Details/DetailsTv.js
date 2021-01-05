@@ -21,6 +21,7 @@ const DetailsTv = () => {
       return setSeasonsDetails(null);
     }
     setSeasonLoading(true);
+    setOverview(null);
     const id = details.id.slice(1, details.id.length);
 
     fetch(
