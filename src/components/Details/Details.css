@@ -242,7 +242,7 @@
   border-radius: 0 0 10px 10px;
 }
 
-.episodes-list div {
+.episodes-list div:not(.season-spinner) {
   display: flex;
   justify-content: space-between;
   padding: 3px 0;

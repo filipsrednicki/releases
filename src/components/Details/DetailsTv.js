@@ -105,7 +105,7 @@ const DetailsTv = () => {
           </div>
         </div>
         <div>
-          <h3>Seasons</h3>
+          <h3 id="seasons">Seasons</h3>
           <div className="seasons-container">
             <ul className="seasons-list">
               {details.seasons.map((season) => (
@@ -127,22 +127,21 @@ const DetailsTv = () => {
             </ul>
           </div>
 
-          <Loader
-            type="ThreeDots"
-            color="#f0a211"
-            visible={seasonLoading}
-            height={120}
-            width={120}
-          />
-
           {seasonError && 
             <ErrorNotification errMsg={seasonError} />
           }
 
           <ul className="episodes-list" ref={episodesListRef}>
-            {seasonDetails &&
-              !seasonLoading &&
-              seasonDetails.episodes.map((episode) => (
+            {seasonLoading ? (
+              <Loader
+                type="ThreeDots"
+                color="#f0a211"
+                height={120}
+                width={120}
+                className="season-spinner"
+              />
+            ) : (
+              seasonDetails && seasonDetails.episodes.map((episode) => (
                 <li key={episode.id} onClick={() => onEpisodeClick(episode.id)}>
                   <div>
                     <span className="ep-name">
@@ -168,7 +167,8 @@ const DetailsTv = () => {
                     </div>
                   )}
                 </li>
-              ))}
+              ))
+            )}
           </ul>
 
           {seasonDetails && (
