@@ -7,6 +7,7 @@ import Image from "../Image";
 import ErrorNotification from "../Errors/ErrorNotification";
 import { useDatabase } from "../../context/DatabaseContext";
 import Loader from "react-loader-spinner";
+import {scroller} from 'react-scroll'
 
 const DetailsTv = () => {
   const { details } = useDatabase();
@@ -22,6 +23,7 @@ const DetailsTv = () => {
       episodesListRef.current.style.minHeight = "";
       return setSeasonsDetails(null);
     }
+    scroller.scrollTo("seasons", {smooth: true, offset: -120})
     setSeasonLoading(true);
     setOverview(null);
     setSeasonError(null);
