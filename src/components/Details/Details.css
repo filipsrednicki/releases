@@ -221,6 +221,10 @@
   cursor: pointer;
 }
 
+.episodes-list li:hover {
+  background-color: #1f1f22;
+}
+
 .episodes-list .ep-name {
   justify-self: start;
   font-weight: 500;
