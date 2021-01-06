@@ -240,6 +240,7 @@
   margin-bottom: 10px;
   max-height: 113px;
   max-width: 200px;
+  border-radius: 10px;
 }
 
 .episodes-list li:first-child {
