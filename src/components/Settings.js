@@ -1,8 +1,10 @@
 import React, { useRef, useState } from "react";
+import ReAuth from "./ReAuth"
 
 const Settings = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [accountAction, setAccountAction] = useState(null);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -10,10 +12,12 @@ const Settings = () => {
 
   const handleEmailChange = (e) => {
     e.preventDefault();
+    setAccountAction("changeEmail");
   };
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
+    setAccountAction("changePassword");
   };
 
   const arePasswordsMatching = () => {
@@ -80,7 +84,16 @@ const Settings = () => {
       </form>
       
       <h2>Delete your account</h2>
-      <button>Delete account</button>
+      <button onClick={() => setAccountAction("delete")}>Delete account</button>
+
+      {accountAction && (
+          <ReAuth 
+            accountAction={accountAction} 
+            setAccountAction={setAccountAction} 
+            newEmail={emailRef.current.value}
+            newPassword={passwordRef.current.value}
+          />
+      )}
     </div>
   );
 };
