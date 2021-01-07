@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import firebase, { auth } from "../firebase";
+import { useHistory } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
@@ -11,6 +12,7 @@ const AuthProvider = (props) => {
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [authMode, setAuthMode] = useState("");
+  const history = useHistory();
 
   const signUp = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -22,6 +24,9 @@ const AuthProvider = (props) => {
 
   const logOut = () => {
     setUser("");
+    if (history.location.pathname !== "/") {
+      history.push("/");
+    }
     return auth.signOut();
   };
 
@@ -42,12 +47,12 @@ const AuthProvider = (props) => {
   const changePassword = (password) => {
     const user = auth.currentUser;
     return user.updatePassword(password);
-  }
+  };
 
   const deleteAccount = () => {
     const user = auth.currentUser;
     return user.delete();
-  }
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -68,6 +73,9 @@ const AuthProvider = (props) => {
         logIn,
         logOut,
         reAuthenticate,
+        changeEmail,
+        changePassword,
+        deleteAccount,
         isLoading,
         authMode,
         setAuthMode

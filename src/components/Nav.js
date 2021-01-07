@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { NavLink, Route, useHistory } from "react-router-dom";
+import { NavLink, Route } from "react-router-dom";
 import Search from "./Search/Search";
 
 import { useAuth } from "../context/AuthContext";
@@ -8,16 +8,12 @@ import { useDatabase } from "../context/DatabaseContext";
 const Nav = () => {
   const calendarNav = useRef();
   const upcomingNav = useRef();
-  const history = useHistory();
   const { user, logOut, setAuthMode } = useAuth();
   const { setList } = useDatabase();
 
   const handleLogOut = () => {
     logOut();
     setList([]);
-    if (history.location.pathname !== "/") {
-      history.push("/");
-    }
   };
 
   return (
