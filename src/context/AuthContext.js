@@ -44,6 +44,11 @@ const AuthProvider = (props) => {
     return user.updatePassword(password);
   }
 
+  const deleteAccount = () => {
+    const user = auth.currentUser;
+    return user.delete();
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoading(false);
