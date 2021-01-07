@@ -39,6 +39,11 @@ const AuthProvider = (props) => {
     return user.updateEmail(email);
   };
 
+  const changePassword = (password) => {
+    const user = auth.currentUser;
+    return user.updatePassword(password);
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoading(false);
