@@ -1,7 +1,6 @@
 .upcoming-container {
   height: 100%;
   position: relative;
-  padding-top: 140px;
   transition: all 0.4s ease-in-out;
 }
 

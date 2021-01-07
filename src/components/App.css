@@ -636,9 +636,6 @@ form .alert .error-msg {
   .search-categories .label-container {
     width: 21%;
   }
-  .calendar {
-    padding-top: 175px;
-  }
   .selected-month {
     width: 80%;
   }
@@ -658,9 +655,6 @@ form .alert .error-msg {
   .calendar-view {
     display: block;
   }
-  .upcoming-container {
-    padding-top: 175px;
-  }
   .upcoming-head {
     width: 98%;
   }
@@ -671,9 +665,6 @@ form .alert .error-msg {
   .upcoming-categories .label-container {
     font-size: 0.9em;
     max-width: 100px;
-  }
-  .details {
-    padding-top: 175px;
   }
   .details-content {
     width: 95%;
