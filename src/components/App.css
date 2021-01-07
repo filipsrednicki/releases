@@ -618,6 +618,7 @@ form .alert .error-msg {
   .navbar {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 110px;
   }
   .navlinks {
     width: 40%;
