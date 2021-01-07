@@ -34,6 +34,11 @@ const AuthProvider = (props) => {
     return user.reauthenticateWithCredential(credantials);
   };
 
+  const changeEmail = (email) => {
+    const user = auth.currentUser;
+    return user.updateEmail(email);
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoading(false);
