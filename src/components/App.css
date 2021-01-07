@@ -70,7 +70,7 @@ button:disabled:hover {
   height: 60px;
   width: 100%;
   background-color: #1a1a1d;
-  position: fixed;
+  position: sticky;
   top: 0;
   display: grid;
   grid-template: 1fr / 30% 40% 30%;
