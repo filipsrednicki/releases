@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Modal from "./Modal/Modal";
 import ErrorNotification from "./Errors/ErrorNotification";
 import { useAuth } from "../context/AuthContext";
@@ -8,6 +8,7 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [reAuthError, setReAuthError] = useState(false);
+  const [password, setPassword] = useState("");
   const {
     reAuthenticate,
     changePassword,
@@ -15,14 +16,13 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
     deleteAccount,
     logOut
   } = useAuth();
-  const passwordRef = useRef();
 
   const handleReAuth = (e) => {
     e.preventDefault();
     setIsLoading(true);
     setReAuthError(null);
 
-    reAuthenticate(passwordRef.current.value)
+    reAuthenticate(password)
       .then(() => {
         console.log("success");
         switch (accountAction) {
@@ -108,7 +108,8 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
               required
               minLength="6"
               placeholder="Password"
-              ref={passwordRef}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             {reAuthError && <ErrorNotification content={reAuthError} />}
             <button type="submit" className="sign-btn">
