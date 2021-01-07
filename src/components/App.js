@@ -8,6 +8,7 @@ import NotAuthorized from "./Errors/NotAuthorized";
 import NotFoundPage from "./Errors/NotFoundPage";
 import Nav from "./Nav";
 import Footer from "./Footer";
+import Settings from "./Settings";
 import ErrorModal from "./Modal/ErrorModal";
 import ConfirmDelModal from "./Modal/ConfirmDelModal";
 import { useAuth } from "../context/AuthContext";
@@ -38,6 +39,10 @@ const App = () => {
             <Route
               path="/calendar/:date?"
               render={() => (user ? <Calendar /> : <NotAuthorized />)}
+            />
+            <Route
+              path="/settings"
+              render={() => (user ? <Settings /> : <NotAuthorized />)}
             />
             <Route exact path="/" component={Upcoming} />
             <Route path="/details/:id" component={Details} />
