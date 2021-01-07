@@ -78,6 +78,9 @@ const Settings = () => {
         />
         <button type="submit">Change password</button>
       </form>
+      
+      <h2>Delete your account</h2>
+      <button>Delete account</button>
     </div>
   );
 };
