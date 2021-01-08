@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
 
-const Dropdown = ({ children, setShowDropdown }) => {
+const Dropdown = ({ children, showDropdown, setShowDropdown }) => {
   const dropdownRef = useRef();
 
   useEffect(() => {
+    if(!showDropdown) {
+      return
+    }
     const hideDropdown = (e) => {
       if (
         dropdownRef.current.contains(e.target) ||
@@ -18,12 +21,16 @@ const Dropdown = ({ children, setShowDropdown }) => {
     return () => {
       document.removeEventListener("mousedown", hideDropdown);
     };
-  }, [setShowDropdown]);
+  }, [showDropdown, setShowDropdown]);
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
-      {children}
-    </div>
+    <>
+      {showDropdown && 
+        <div className="dropdown" ref={dropdownRef}>
+          {children}
+        </div>
+      }
+    </>
   );
 };
 
