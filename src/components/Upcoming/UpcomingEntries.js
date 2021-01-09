@@ -14,10 +14,13 @@ const UpcomingEntries = ({ type, upcoming }) => {
               <h3>{entry.title || entry.name}</h3>
               {type === "shows" ? (
                 <>
-                  {entry.last_episode_to_air.air_date}
-                  {entry.next_episode_to_air
-                    ? " / " + entry.next_episode_to_air.air_date
-                    : ""}
+                  {entry.last_episode_to_air && entry.next_episode_to_air ? (
+                    `${entry.last_episode_to_air.air_date} / ${entry.next_episode_to_air.air_date}`
+                  ) : (
+                    (entry.last_episode_to_air && entry.last_episode_to_air.air_date) || 
+                    (entry.next_episode_to_air && entry.next_episode_to_air.air_date) || 
+                    ""
+                  )}
                 </>
               ) : (
                 entry.release_date || entry.released
