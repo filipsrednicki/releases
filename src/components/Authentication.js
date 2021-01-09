@@ -98,10 +98,6 @@ const Authentication = () => {
         setLoading(false);
       })
     }
-
-    email.current = "";
-    setPassword("");
-    setConfirmPassword("")
   }
 
   return (
