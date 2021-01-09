@@ -40,18 +40,27 @@ const Upcoming = () => {
     }
 
     let end;
-    if (dateNow.getMonth() === 11) {
-      end = {
-        year: dateNow.getFullYear() + 1,
-        month: 0,
-        day: endDay + 1
-      };
-    } else {
-      end = {
-        year: dateNow.getFullYear(),
-        month: (dateNow.getMonth() + 1) % 12,
-        day: endDay + 1
-      }
+    switch (dateNow.getMonth()) {
+      case 11:
+        end = {
+          year: dateNow.getFullYear() + 1,
+          month: 1,
+          day: endDay + 1
+        };
+        break;
+      case 10:
+        end = {
+          year: dateNow.getFullYear() + 1,
+          month: 0,
+          day: endDay + 1
+        };
+        break;
+      default:
+        end = {
+          year: dateNow.getFullYear(),
+          month: dateNow.getMonth() + 2,
+          day: endDay + 1
+        }
     }
 
     const endDateStr = new Date(end.year, end.month, end.day).toISOString().slice(0, 10)
