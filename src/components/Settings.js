@@ -1,19 +1,26 @@
 import React, { useRef, useState } from "react";
 import ReAuth from "./ReAuth"
 import ErrorNotification from "./Errors/ErrorNotification";
+import { useAuth } from "../context/AuthContext";
 
 const Settings = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [accountAction, setAccountAction] = useState(null);
   const [diffPasswords, setDiffPasswords] = useState(false)
+  const [sameEmail, setSameEmail] = useState(false)
 
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPassRef = useRef();
+  const { user } = useAuth()
 
   const handleEmailChange = (e) => {
     e.preventDefault();
+    if(user.email === emailRef.current.value) {
+      return setSameEmail(true)
+    }
+    setSameEmail(false)
     setAccountAction("changeEmail");
   };
 
@@ -59,6 +66,9 @@ const Settings = () => {
             placeholder="E-mail"
             ref={emailRef}
           />
+          {sameEmail && 
+            <ErrorNotification content="That's your current e-mail! Please, use a different one." />
+          }
           <button type="submit">Change e-mail</button>
         </div>
       </form>
