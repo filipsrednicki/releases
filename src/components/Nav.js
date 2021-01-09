@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { NavLink, Route } from "react-router-dom";
 import Search from "./Search/Search";
-import Dropdown from "./Dropdown";
-import DropdownItem from "./DropdownItem";
+import Dropdown from "./Dropdown/Dropdown";
+import DropdownItem from "./Dropdown/DropdownItem";
 
 import { useAuth } from "../context/AuthContext";
 import { useDatabase } from "../context/DatabaseContext";
