@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import { useDatabase } from "../context/DatabaseContext";
 
 const Authentication = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
@@ -14,14 +15,14 @@ const Authentication = () => {
 
   const { signUp, logIn, user, authMode, setAuthMode } = useAuth();
   const { getList, setIsListLoading } = useDatabase();
-  const email = useRef();
+  const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPassRef = useRef();
   const history = useHistory();
 
   useEffect(() => {
     setError(null);
-    email.current.focus();
+    emailRef.current.focus();
   }, [authMode]);
 
   const arePasswordsMatching = () => {
@@ -76,7 +77,7 @@ const Authentication = () => {
     setIsListLoading(false);
 
     if (authMode === "login") {
-      logIn(email.current.value, password).then((res) => {
+      logIn(email, password).then((res) => {
         setIsListLoading(true);
         getList(user);
         setLoading(false);
@@ -88,7 +89,7 @@ const Authentication = () => {
         setLoading(false);
       })
     } else {
-      signUp(email.current.value, password).then((res) => {
+      signUp(email, password).then((res) => {
         setLoading(false);
         setAuthMode("");
         history.push("/calendar");
@@ -135,7 +136,9 @@ const Authentication = () => {
             name="email"
             required
             placeholder="E-mail"
-            ref={email}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            ref={emailRef}
           />
           <label htmlFor="password">Password</label>
           <input
