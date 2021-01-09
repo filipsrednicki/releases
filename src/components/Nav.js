@@ -1,11 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { NavLink, Route } from "react-router-dom";
 import Search from "./Search/Search";
+import Dropdown from "./Dropdown";
+import DropdownItem from "./DropdownItem";
 
 import { useAuth } from "../context/AuthContext";
 import { useDatabase } from "../context/DatabaseContext";
 
 const Nav = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const calendarNav = useRef();
   const upcomingNav = useRef();
   const { user, logOut, setAuthMode } = useAuth();
@@ -14,6 +17,7 @@ const Nav = () => {
   const handleLogOut = () => {
     logOut();
     setList([]);
+    setShowDropdown(false);
   };
 
   return (
@@ -45,10 +49,22 @@ const Nav = () => {
 
       <div className="btn-container">
         {user ? (
-          <button className="btn-logout" onClick={handleLogOut} title="Log Out">
-            <span>Log Out</span>
-            <i className="fas fa-sign-out-alt"></i>
-          </button>
+          <>
+            <i
+              className="fas fa-user dropdown-toggle"
+              onClick={() => setShowDropdown((prevstate) => !prevstate)}
+            ></i>
+            <Dropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}>
+              <DropdownItem type="link" path="/settings" hideDropdown={setShowDropdown}>
+                <i className="fas fa-cog"></i>
+                <span>Settings</span>
+              </DropdownItem>
+              <DropdownItem type="button" buttonClick={handleLogOut}>
+                <i className="fas fa-sign-out-alt"></i>
+                <span>Log Out</span>
+              </DropdownItem>
+            </Dropdown>
+          </>
         ) : (
           <>
             <button
