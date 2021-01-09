@@ -271,8 +271,8 @@ button:disabled:hover {
   border-radius: 10px 10px 0 0;
 }
 
-.settings form div,
-.del-account-container div {
+.settings form > div,
+.del-account-container > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -598,16 +598,13 @@ form.re-auth strong {
   border: 2px solid #801414;
   border-radius: 12px;
   max-width: 500px;
-  min-width: 250px;
   font-size: 0.9em;
   background-color: #80141426;
 }
 
 form .alert .error-msg {
   margin-top: 0;
-  padding: 7px 5px;
-  max-width: 80%;
-  min-width: 240px;
+  padding: 7px 10px;
 }
 
 .error-msg h3 {
@@ -932,14 +929,17 @@ form .alert .error-msg {
   .del-account-container {
     grid-template-columns: 1fr;
   }
-  .settings form div,
-  .del-account-container div {
+  .settings form > div,
+  .del-account-container > div {
     border-left: none;
     padding-left: 5px;
     padding-top: 15px;
   }
   .settings button {
     align-self: center;
+  }
+  .settings .alert {
+    margin: auto;
   }
 }
 
