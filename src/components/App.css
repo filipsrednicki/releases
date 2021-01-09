@@ -233,6 +233,86 @@ button:disabled:hover {
   background-color: #a8a8a8;
 }
 
+/************/
+/* SETTINGS */
+/************/
+
+.settings {
+  width: 95%;
+  margin: 0 auto 40px;
+}
+
+.settings h1 {
+  margin: 0 auto 15px;
+  font-size: 2.5em;
+}
+
+.settings h2 {
+  margin: 0;
+  font-size: 1.3em;
+  padding: 0 10px;
+}
+
+.settings form,
+.del-account-container {
+  display: grid;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 140px;
+  padding: 20px 15px;
+  grid-template-columns: 40% 1fr;
+  align-items: center;
+  background-color: #1A1A1D;
+  margin: auto;
+  margin-bottom: 2px;
+}
+
+.settings form:first-of-type {
+  border-radius: 10px 10px 0 0;
+}
+
+.settings form div,
+.del-account-container div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  padding: 10px 5px 10px 20px;
+  border-left: 2px solid #26262a;
+}
+
+.settings input {
+  max-width: 410px;
+  align-self: flex-start;
+}
+
+.del-account-container {
+  border-radius: 0 0 10px 10px;
+}
+
+.del-account-container p {
+  margin-top: 0;
+  font-size: 0.9em;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-align: left;
+  color: #a70000;
+}
+
+.settings button {
+  background-color: #f0a211;
+  border-radius: 8px;
+  padding: 7px 12px;
+  color: #1A1A1D;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.settings button:hover {
+  background-color: #ecba5c;
+}
+
 /**************/
 /* CATEGORIES */
 /**************/
@@ -826,6 +906,23 @@ form .alert .error-msg {
   .episodes-list div {
     flex-direction: column;
     align-items: center;
+  }
+  .settings h2 {
+    text-align: left;
+    padding: 0;
+  }
+  .settings form,
+  .del-account-container {
+    grid-template-columns: 1fr;
+  }
+  .settings form div,
+  .del-account-container div {
+    border-left: none;
+    padding-left: 5px;
+    padding-top: 15px;
+  }
+  .settings button {
+    align-self: center;
   }
 }
 
