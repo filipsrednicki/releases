@@ -24,18 +24,15 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
 
     reAuthenticate(password)
       .then(() => {
-        console.log("success");
         switch (accountAction) {
           case "delete":
             deleteAccount()
               .then(() => {
-                console.log("success");
                 logOut();
               })
               .catch((error) => {
                 setIsLoading(false);
                 setReAuthError(error.message);
-                console.log(error);
               });
             break;
           case "changePassword":
@@ -43,12 +40,10 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
               .then(() => {
                 setIsLoading(false);
                 setIsSuccess(true);
-                console.log("success");
               })
               .catch((error) => {
                 setIsLoading(false);
                 setReAuthError(error.message);
-                console.log(error);
               });
             break;
           case "changeEmail":
@@ -56,12 +51,10 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
               .then(() => {
                 setIsLoading(false);
                 setIsSuccess(true);
-                console.log("success");
               })
               .catch((error) => {
                 setIsLoading(false);
                 setReAuthError(error.message);
-                console.log(error);
               });
             break;
           default:
