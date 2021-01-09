@@ -87,12 +87,12 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
           visible={isLoading}
         />
         {!isLoading && !isSuccess && (
-          <form onSubmit={handleReAuth}>
+          <form onSubmit={handleReAuth} className="re-auth">
             <h2>Confirm your password</h2>
             {accountAction === "delete" && (
-              <span>You're about to remove your account!</span>
+              <span className="delete-warning">You're about to remove your account!</span>
             )}
-            <p>In order to proceed, please enter your current password.</p>
+            <p>In order to proceed, please enter your <strong>current</strong> password.</p>
             <label htmlFor="password">Password</label>
             <input
               type="password"
