@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react";
 import ReAuth from "./ReAuth"
+import ErrorNotification from "./Errors/ErrorNotification";
 
 const Settings = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [accountAction, setAccountAction] = useState(null);
+  const [diffPasswords, setDiffPasswords] = useState(false)
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -17,12 +19,16 @@ const Settings = () => {
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
+    if(password !== confirmPassword) {
+      return setDiffPasswords(true)
+    }
     setAccountAction("changePassword");
   };
 
   const arePasswordsMatching = () => {
     if (passwordRef.current.value === confirmPassRef.current.value || !confirmPassRef.current.value) {
       confirmPassRef.current.style.boxShadow = "";
+      setDiffPasswords(false);
     } else {
       confirmPassRef.current.style.boxShadow = "0 0 5px 3px red";
     }
@@ -84,6 +90,9 @@ const Settings = () => {
             onChange={onConfirmPasswordInputChange}
             ref={confirmPassRef}
           />
+          {diffPasswords && 
+            <ErrorNotification content="Passwords do not match!" />
+          }
           <button type="submit">Change password</button>
         </div>
       </form>
