@@ -49,7 +49,7 @@ const Upcoming = () => {
     } else {
       end = {
         year: dateNow.getFullYear(),
-        month: dateNow.getMonth() + (2 % 12),
+        month: (dateNow.getMonth() + 1) % 12,
         day: endDay + 1
       }
     }
