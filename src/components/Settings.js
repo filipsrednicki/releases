@@ -40,51 +40,61 @@ const Settings = () => {
 
   return (
     <div className="settings">
+      <h1>Settings</h1>
       <form onSubmit={handleEmailChange}>
         <h2>Change your e-mail</h2>
-        <label htmlFor="email">E-mail</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          placeholder="E-mail"
-          ref={emailRef}
-        />
-        <button type="submit">Change e-mail</button>
+        <div>
+          <label htmlFor="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="E-mail"
+            ref={emailRef}
+          />
+          <button type="submit">Change e-mail</button>
+        </div>
       </form>
 
       <form onSubmit={handlePasswordChange}>
         <h2>Change your password</h2>
-        <label htmlFor="password">New Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          minLength="6"
-          placeholder="Password"
-          value={password}
-          onChange={onPasswordInputChange}
-          ref={passwordRef}
-        />
-        <label htmlFor="confirm-password">Confirm Password</label>
-        <input
-          type="password"
-          id="confirm-password"
-          name="password"
-          required
-          minLength="6"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={onConfirmPasswordInputChange}
-          ref={confirmPassRef}
-        />
-        <button type="submit">Change password</button>
+        <div>
+          <label htmlFor="password">New Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            minLength="6"
+            placeholder="Password"
+            value={password}
+            onChange={onPasswordInputChange}
+            ref={passwordRef}
+          />
+          <label htmlFor="confirm-password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            name="password"
+            required
+            minLength="6"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={onConfirmPasswordInputChange}
+            ref={confirmPassRef}
+          />
+          <button type="submit">Change password</button>
+        </div>
       </form>
-      
-      <h2>Delete your account</h2>
-      <button onClick={() => setAccountAction("delete")}>Delete account</button>
+
+      <div className="del-account-container">
+        <h2>Delete your account</h2>
+        <div>
+          <p>Deleting the account will result in losing all data tied to it.</p>
+          <button onClick={() => setAccountAction("delete")}>Delete account</button>
+        </div>
+      </div>    
 
       {accountAction && (
           <ReAuth 
