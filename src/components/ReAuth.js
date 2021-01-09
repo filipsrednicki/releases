@@ -78,7 +78,7 @@ const ReAuth = ({ accountAction, setAccountAction, newEmail, newPassword }) => {
 
   return (
     <div>
-      <Modal name="form-container" changeDisplay={cleanup} closeButton={true}>
+      <Modal name="form-container" changeDisplay={cleanup} closeButton={true} isLoading={isLoading}>
         <Loader
           type="ThreeDots"
           color="#f0a211"

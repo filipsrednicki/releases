@@ -22,7 +22,7 @@ const ConfirmDelModal = () => {
   };
 
   return (
-    <Modal name="confirmation-modal" changeDisplay={cleanup}>
+    <Modal name="confirmation-modal" changeDisplay={cleanup} isLoading={isBtnLoading}>
         {isBtnLoading ? (
             <Loader type="ThreeDots" color="#f0a211" height={60} width={70} />
           ) : (

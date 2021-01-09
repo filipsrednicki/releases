@@ -105,7 +105,7 @@ const Authentication = () => {
   }
 
   return (
-    <Modal name="form-container" changeDisplay={() => setAuthMode("")} closeButton={true}>
+    <Modal name="form-container" changeDisplay={() => setAuthMode("")} closeButton={true} isLoading={isLoading}>
       <Loader
         type="ThreeDots"
         color="#f0a211"
