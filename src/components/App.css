@@ -141,6 +141,57 @@ button:disabled:hover {
   display: flex;
   justify-content: flex-end;
   margin-right: 20px;
+  position: relative;
+}
+
+.dropdown-toggle {
+  padding: 8px 10px;
+  justify-self: end;
+  align-self: center;
+  color: #1a1a1d;
+  border-radius: 50%;
+  background-color: #f0a211;
+  cursor: pointer;
+  font-size: 1.3em;
+}
+
+.dropdown {
+  position: absolute;
+  width: 130px;
+  padding: 10px 5px;
+  right: 0;
+  top: 55px;
+  z-index: 99999;
+  background-color: #1A1A1D;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 3px #26262A;
+}
+
+.dropdown a {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.dropdown-item {
+  width: 100%;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.dropdown-item i {
+  margin-right: 10px;
+}
+
+.dropdown-item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.dropdown-item:hover {
+  background-color: #27272a;
 }
 
 .btn-auth,
@@ -157,7 +208,7 @@ button:disabled:hover {
   transition: all 0.4s ease-in-out;
 }
 
-.btn-container i {
+.btn-container button i {
   display: none;
   font-size: 1.3em;
 }
@@ -172,7 +223,8 @@ button:disabled:hover {
 }
 
 .btn-auth:hover,
-.btn-logout:hover {
+.btn-logout:hover,
+.dropdown-toggle:hover {
   color: #1a1a1d;
   background-color: #ecba5c;
 }
@@ -722,10 +774,10 @@ form .alert .error-msg {
   .navlinks {
     width: 70%;
   }
-  .btn-container span {
+  .btn-container button span {
     display: none;
   }
-  .btn-container i {
+  .btn-container button i {
     display: block;
   }
   .btn-container button {
