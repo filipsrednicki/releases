@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { NavLink, Route } from "react-router-dom";
 import Search from "./Search/Search";
 import Dropdown from "./Dropdown/Dropdown";
@@ -6,13 +6,17 @@ import DropdownItem from "./Dropdown/DropdownItem";
 
 import { useAuth } from "../context/AuthContext";
 import { useDatabase } from "../context/DatabaseContext";
+import useDropdown from "./Dropdown/useDropdown"
 
 const Nav = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
   const calendarNav = useRef();
   const upcomingNav = useRef();
   const { user, logOut, setAuthMode } = useAuth();
   const { setList } = useDatabase();
+  
+  const dropdownRef = useRef();
+  const classes = ["dropdown-toggle"]
+  const [showDropdown, setShowDropdown] = useDropdown(dropdownRef, classes)
 
   const handleLogOut = () => {
     logOut();
@@ -54,12 +58,12 @@ const Nav = () => {
               className="fas fa-user dropdown-toggle"
               onClick={() => setShowDropdown((prevstate) => !prevstate)}
             ></i>
-            <Dropdown showDropdown={showDropdown} setShowDropdown={setShowDropdown}>
-              <DropdownItem type="link" path="/settings" hideDropdown={setShowDropdown}>
+            <Dropdown el="div" dropdownRef={dropdownRef} showDropdown={showDropdown}>
+              <DropdownItem path="/settings" handleClick={() => setShowDropdown(false)}>
                 <i className="fas fa-cog"></i>
                 <span>Settings</span>
               </DropdownItem>
-              <DropdownItem type="button" buttonClick={handleLogOut}>
+              <DropdownItem handleClick={handleLogOut}>
                 <i className="fas fa-sign-out-alt"></i>
                 <span>Log Out</span>
               </DropdownItem>
