@@ -1,20 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const DropdownItem = ({children, type, path, buttonClick, hideDropdown}) => {
+const DropdownItem = ({ children, path, handleClick, name }) => {
+  const CustomTag = path ? Link : "div";
   return (
-      <>
-        {type === "link" && 
-            <Link to={path} className="dropdown-item" onClick={() => hideDropdown(false)}>
-                {children}
-            </Link>
-        }
-        {type === "button" && 
-            <div className="dropdown-item" onClick={buttonClick}>
-                {children}
-            </div>
-        }
-      </>
+    <CustomTag
+      to={path}
+      className={name ? name : "dropdown-item"}
+      onClick={handleClick}
+    >
+      {children}
+    </CustomTag>
   );
 };
 
