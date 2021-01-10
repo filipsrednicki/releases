@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Categories from "../Categories";
 import SearchResult from "./SearchResult";
+import SearchError from "./SearchError";
 import "./Search.css";
 import Loader from "react-loader-spinner";
 import useDropdown from "../Dropdown/useDropdown";
@@ -183,6 +184,23 @@ const Search = () => {
           borderRadius: !isCategories && "12px",
         }}
       />
+
+      <SearchError
+        visible={showDropdown && noResults}
+        isCategories={isCategories}
+        searchRef={searchResults}
+      >
+        No results found for "{query}".
+      </SearchError>
+
+      <SearchError
+        visible={showDropdown && error}
+        isCategories={isCategories}
+        searchRef={searchResults}
+      >
+        <h4>Oops! Something went wrong.</h4>
+        Error message: {error}
+      </SearchError>
 
       <Dropdown
         el="ul"
