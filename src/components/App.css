@@ -829,7 +829,7 @@ form .alert .error-msg {
     width: 95%;
     left: 2.5%;
     height: 500px;
-    top: 450px;
+    top: 255px;
   }
   .info-content {
     display: flex;
