@@ -83,7 +83,8 @@
   background-color: #f0a211;
 }
 
-ul.search {
+ul.search,
+div.search {
   list-style: none;
   width: 100%;
   margin: auto;
@@ -118,7 +119,6 @@ ul.search::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-.no-results-msg,
 .search-error-msg {
   display: block;
   color: #FFF;
