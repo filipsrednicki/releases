@@ -1,36 +1,26 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
-const Dropdown = ({ children, showDropdown, setShowDropdown }) => {
-  const dropdownRef = useRef();
+const Dropdown = ({
+  children,
+  showDropdown,
+  dropdownRef,
+  el,
+  name,
+  styles,
+}) => {
+  if (!showDropdown) {
+    return null;
+  }
 
-  useEffect(() => {
-    if(!showDropdown) {
-      return
-    }
-    const hideDropdown = (e) => {
-      if (
-        dropdownRef.current.contains(e.target) ||
-        e.target.classList.contains("dropdown-toggle")
-      ) {
-        return;
-      }
-      setShowDropdown(false);
-    };
-    document.addEventListener("mousedown", hideDropdown);
-
-    return () => {
-      document.removeEventListener("mousedown", hideDropdown);
-    };
-  }, [showDropdown, setShowDropdown]);
-
+  const CustomTag = el;
   return (
-    <>
-      {showDropdown && 
-        <div className="dropdown" ref={dropdownRef}>
-          {children}
-        </div>
-      }
-    </>
+    <CustomTag
+      className={name ? name : "dropdown"}
+      ref={dropdownRef}
+      style={styles}
+    >
+      {children}
+    </CustomTag>
   );
 };
 
