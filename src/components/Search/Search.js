@@ -3,6 +3,11 @@ import Categories from "../Categories";
 import SearchResult from "./SearchResult";
 import "./Search.css";
 import Loader from "react-loader-spinner";
+import useDropdown from "../Dropdown/useDropdown";
+import Dropdown from "../Dropdown/Dropdown";
+import DropdownItem from "../Dropdown/DropdownItem";
+import AddDelBtn from "../AddDelBtn";
+import { useDatabase } from "../../context/DatabaseContext";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -11,9 +16,13 @@ const Search = () => {
   const [noResults, setNoResults] = useState(false);
   const [error, setError] = useState(null);
   const [isCategories, setIsCategories] = useState(false);
-  const [isListDisplayed, setIsListDisplayed] = useState(false);
 
   const category = useRef("movie");
+
+  const searchResults = useRef();
+  const { checkDetails } = useDatabase();
+  const classes = ["search-bar", "categories", "show-categories"];
+  const [showDropdown, setShowDropdown] = useDropdown(searchResults, classes);
 
   const updateQuery = (queryStr) => {
     setQuery(queryStr);
@@ -36,14 +45,14 @@ const Search = () => {
       let url = "";
 
       if (category.current === "game") {
-        url =
-          "https://api.rawg.io/api/games?page_size=5&search=" +
-          query
+        url = "https://api.rawg.io/api/games?page_size=5&search=" + query;
       } else {
         url =
           "https://api.themoviedb.org/3/search/" +
           category.current +
-          "?api_key="+ process.env.REACT_APP_TMDB_API_KEY + "&query=" +
+          "?api_key=" +
+          process.env.REACT_APP_TMDB_API_KEY +
+          "&query=" +
           query;
       }
 
@@ -53,7 +62,7 @@ const Search = () => {
           if (result.results.length === 0) {
             setNoResults(true);
             setLoadingResults(false);
-            setIsListDisplayed(true);
+            setShowDropdown(true);
           } else {
             setNoResults(false);
             if (category.current === "tv") {
@@ -68,11 +77,9 @@ const Search = () => {
         .catch((error) => {
           setError(error.message);
           setLoadingResults(false);
-          setIsListDisplayed(true);
         });
     } else {
       setResults([]);
-      setIsListDisplayed(false);
     }
   };
 
@@ -111,7 +118,6 @@ const Search = () => {
 
     setResults(resultsCopy);
     setLoadingResults(false);
-    setIsListDisplayed(true);
   };
 
   const chooseCategory = (cat) => {
@@ -129,6 +135,11 @@ const Search = () => {
     setIsCategories(!isCategories);
   };
 
+  const hideDropdown = (id) => {
+    checkDetails(id);
+    setShowDropdown(false);
+  };
+
   return (
     <div className="search-container">
       <div>
@@ -139,7 +150,7 @@ const Search = () => {
           value={query}
           onChange={(e) => updateQuery(e.target.value)}
           onKeyDown={(e) => searchByTitle(e.key)}
-          onClick={() => setIsListDisplayed(true)}
+          onClick={() => setShowDropdown(true)}
           disabled={loadingResults}
         />
 
@@ -165,7 +176,6 @@ const Search = () => {
       </span>
 
       <Categories
-        isCategories={isCategories}
         chooseCategory={chooseCategory}
         name="search-"
         styles={{
@@ -174,17 +184,31 @@ const Search = () => {
         }}
       />
 
-      {isListDisplayed && (noResults || results.length > 0 || error) && (
-        <SearchResult
-          setIsListDisplayed={setIsListDisplayed}
-          results={results}
-          category={category}
-          isCategories={isCategories}
-          query={query}
-          noResults={noResults}
-          error={error}
-        />
-      )}
+      <Dropdown
+        el="ul"
+        name="search"
+        dropdownRef={searchResults}
+        showDropdown={showDropdown && results.length > 0}
+        styles={{
+          top: isCategories ? "-30px" : "-70px",
+          paddingTop: isCategories ? "9px" : "9px",
+        }}
+      >
+        {results.map((result) => (
+          <li className="search" key={result.id}>
+            <DropdownItem
+              path={`/details/${result.id}`}
+              name="details-link"
+              handleClick={() => hideDropdown(result.id)}
+            >
+              <SearchResult result={result} category={category.current} />
+            </DropdownItem>
+            <div className="buttons">
+              <AddDelBtn entry={result} loaderH="40" loaderW="40" />
+            </div>
+          </li>
+        ))}
+      </Dropdown>
     </div>
   );
 };
