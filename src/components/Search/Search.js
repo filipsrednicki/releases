@@ -11,6 +11,7 @@ import AddDelBtn from "../AddDelBtn";
 import { useDatabase } from "../../context/DatabaseContext";
 
 const Search = () => {
+  const [advSearchQuery, setAdvSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [noResults, setNoResults] = useState(false);
   const [error, setError] = useState(null);
@@ -42,6 +43,7 @@ const Search = () => {
   return (
     <div className="search-container">
       <SearchBar
+        setAdvSearchQuery={setAdvSearchQuery}
         setResults={setResults}
         setIsListDisplayed={setShowDropdown}
         category={category.current}
@@ -107,6 +109,12 @@ const Search = () => {
             </div>
           </li>
         ))}
+        <DropdownItem
+          path={`/search/${category.current}?query=${advSearchQuery}`}
+          handleClick={() => setShowDropdown(false)}
+        >
+          More results
+        </DropdownItem>
       </Dropdown>
     </div>
   );
