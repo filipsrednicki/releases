@@ -1,6 +1,6 @@
 import React from "react";
 
-const Categories = ({ name, chooseCategory, styles }) => {
+const Categories = ({ name, chooseCategory, styles, checked }) => {
   return (
     <div
       className={"categories " + name + "categories"}
@@ -11,7 +11,7 @@ const Categories = ({ name, chooseCategory, styles }) => {
         id={name + "movies"}
         name={name + "categories"}
         value="movie"
-        defaultChecked
+        defaultChecked={checked === "movie" || !checked}
         onChange={(e) => chooseCategory(e.target.value)}
       />
       <label className="movies-label label-container" htmlFor={name + "movies"}>
@@ -23,6 +23,7 @@ const Categories = ({ name, chooseCategory, styles }) => {
         id={name + "tv"}
         name={name + "categories"}
         value="tv"
+        defaultChecked={checked === "tv"}
         onChange={(e) => chooseCategory(e.target.value)}
       />
       <label className="tv-label label-container" htmlFor={name + "tv"}>
@@ -34,6 +35,7 @@ const Categories = ({ name, chooseCategory, styles }) => {
         id={name + "games"}
         name={name + "categories"}
         value="game"
+        defaultChecked={checked === "game"}
         onChange={(e) => chooseCategory(e.target.value)}
       />
       <label className="games-label label-container" htmlFor={name + "games"}>
