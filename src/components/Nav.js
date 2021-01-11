@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { NavLink, Route } from "react-router-dom";
+import { NavLink, Route, useLocation } from "react-router-dom";
 import Search from "./Search/Search";
 import Dropdown from "./Dropdown/Dropdown";
 import DropdownItem from "./Dropdown/DropdownItem";
@@ -13,6 +13,7 @@ const Nav = () => {
   const upcomingNav = useRef();
   const { user, logOut, setAuthMode } = useAuth();
   const { setList } = useDatabase();
+  const { pathname } = useLocation()
   
   const dropdownRef = useRef();
   const classes = ["dropdown-toggle"]
@@ -48,8 +49,10 @@ const Nav = () => {
           </NavLink>
         )}
       </div>
-
-      <Route path="/" component={Search} />
+      
+      {!pathname.includes("/search") && 
+        <Route path="/" component={Search} />
+      }
 
       <div className="btn-container">
         {user ? (
