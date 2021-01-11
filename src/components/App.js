@@ -11,6 +11,7 @@ import Footer from "./Footer";
 import Settings from "./Settings";
 import ErrorModal from "./Modal/ErrorModal";
 import ConfirmDelModal from "./Modal/ConfirmDelModal";
+import AdvSearch from "./Search/AdvSearch"
 import { useAuth } from "../context/AuthContext";
 import { useDatabase } from "../context/DatabaseContext";
 import "./App.css";
@@ -46,6 +47,7 @@ const App = () => {
             />
             <Route exact path="/" component={Upcoming} />
             <Route path="/details/:id" component={Details} />
+            <Route path="/search/:category?" component={AdvSearch} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
           <Footer />
