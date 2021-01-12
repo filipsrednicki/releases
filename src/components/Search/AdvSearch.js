@@ -26,7 +26,7 @@ const AdvSearch = () => {
     setError,
     searchByTitle,
     loadingResults,
-  } = useSearch(category.current);
+  } = useSearch(category.current, 20);
 
   const chooseCategory = (cat) => {
     setNoResults(false);
