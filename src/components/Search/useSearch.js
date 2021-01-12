@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-const useSearch = (category) => {
+const useSearch = (category, pageSize = 5) => {
   const [results, setResults] = useState([]);
   const [noResults, setNoResults] = useState(false);
   const [error, setError] = useState(null);
@@ -22,7 +22,7 @@ const useSearch = (category) => {
 
     let url = "";
     if (category === "game") {
-      url = `https://api.rawg.io/api/games?page_size=5&page=${pageNum}&search=${query}`;
+      url = `https://api.rawg.io/api/games?page_size=${pageSize}&page=${pageNum}&search=${query}`;
     } else {
       url = `https://api.themoviedb.org/3/search/${category}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&query=${query}&page=${pageNum}`;
     }
@@ -51,7 +51,7 @@ const useSearch = (category) => {
   };
 
   const unifyResults = (result, prefix) => {
-    let resultsCopy = result.results.slice(0, 5);
+    let resultsCopy = result.results.slice(0, pageSize);
 
     if (prefix !== "g") {
       resultsCopy = resultsCopy.map((result) => {
@@ -65,7 +65,7 @@ const useSearch = (category) => {
       });
     }
 
-    resultsCopy.forEach((item, i) => {
+    resultsCopy.forEach((item) => {
       item.id = prefix + item.id;
       if (prefix === "g") {
         if (item.platforms === null) {
