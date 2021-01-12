@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
+import { useHistory } from "react-router-dom";
 
 const SearchBar = ({
+  setAdvSearchQuery,
   setIsListDisplayed,
   setResults,
   category,
   setNoResults,
   setError,
+  urlQuery
 }) => {
   const [query, setQuery] = useState("");
   const [loadingResults, setLoadingResults] = useState(false);
+  const history = useHistory()
 
   const isList = (bool) => {
     if (!setIsListDisplayed) return;
@@ -18,6 +22,7 @@ const SearchBar = ({
 
   const updateQuery = (queryStr) => {
     setQuery(queryStr);
+    setAdvSearchQuery && setAdvSearchQuery(queryStr);
     setNoResults(false);
   };
 
@@ -28,14 +33,21 @@ const SearchBar = ({
     setError(null);
   };
 
-  const searchByTitle = (key) => {
+  const searchByTitle = (key, passedQuery) => {
     setError(null);
-    if (query && key === "Enter") {
+    const finalQuery = passedQuery || query
+    if (finalQuery && key === "Enter") {
       setLoadingResults(true);
+      if(history.location.pathname.includes("/search")) {
+        history.push({
+          pathname: `/search/${category}`,
+          search: "?query=" + finalQuery
+        })
+      }
       let url = "";
 
       if (category === "game") {
-        url = "https://api.rawg.io/api/games?page_size=5&search=" + query;
+        url = "https://api.rawg.io/api/games?page_size=5&search=" + finalQuery;
       } else {
         url =
           "https://api.themoviedb.org/3/search/" +
@@ -43,7 +55,7 @@ const SearchBar = ({
           "?api_key=" +
           process.env.REACT_APP_TMDB_API_KEY +
           "&query=" +
-          query;
+          finalQuery;
       }
 
       fetch(url)
@@ -112,6 +124,15 @@ const SearchBar = ({
     setLoadingResults(false);
     isList(true);
   };
+
+  useEffect(() => {
+    if(urlQuery) {
+      console.log(decodeURIComponent(urlQuery))
+      searchByTitle("Enter", urlQuery)
+      setQuery(decodeURIComponent(urlQuery))
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlQuery])
 
   return (
     <div>
