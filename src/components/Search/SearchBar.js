@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
-import { useHistory } from "react-router-dom";
 
 const SearchBar = ({
   setAdvSearchQuery,
   setIsListDisplayed,
   setResults,
-  category,
   setNoResults,
   setError,
-  urlQuery
+  urlQuery,
+  loadingResults,
+  searchByTitle
 }) => {
   const [query, setQuery] = useState("");
-  const [loadingResults, setLoadingResults] = useState(false);
-  const history = useHistory()
-
-  const isList = (bool) => {
-    if (!setIsListDisplayed) return;
-    setIsListDisplayed(bool);
-  };
 
   const updateQuery = (queryStr) => {
     setQuery(queryStr);
     setAdvSearchQuery && setAdvSearchQuery(queryStr);
     setNoResults(false);
+    if (!queryStr) {
+      setResults([])
+    }
   };
 
   const clearQuery = () => {
@@ -33,106 +29,17 @@ const SearchBar = ({
     setError(null);
   };
 
-  const searchByTitle = (key, passedQuery) => {
-    setError(null);
-    const finalQuery = passedQuery || query
-    if (finalQuery && key === "Enter") {
-      setLoadingResults(true);
-      if(history.location.pathname.includes("/search")) {
-        history.push({
-          pathname: `/search/${category}`,
-          search: "?query=" + finalQuery
-        })
-      }
-      let url = "";
-
-      if (category === "game") {
-        url = "https://api.rawg.io/api/games?page_size=5&search=" + finalQuery;
-      } else {
-        url =
-          "https://api.themoviedb.org/3/search/" +
-          category +
-          "?api_key=" +
-          process.env.REACT_APP_TMDB_API_KEY +
-          "&query=" +
-          finalQuery;
-      }
-
-      fetch(url)
-        .then((res) => res.json())
-        .then((result) => {
-          if (result.results.length === 0) {
-            setNoResults(true);
-            setLoadingResults(false);
-            isList(true);
-          } else {
-            setNoResults(false);
-            if (category === "tv") {
-              unifyResults(result, "t");
-            } else if (category === "game") {
-              unifyResults(result, "g");
-            } else {
-              unifyResults(result, "m");
-            }
-          }
-        })
-        .catch((error) => {
-          setError(error.message);
-          setLoadingResults(false);
-          isList(true);
-        });
-    } else {
-      setResults([]);
-      isList(false);
-    }
-  };
-
-  const unifyResults = (result, prefix) => {
-    let resultsCopy = result.results.slice(0, 5);
-
-    if (prefix !== "g") {
-      resultsCopy = resultsCopy.map((result) => {
-        if (prefix === "m") {
-          const { title: name, release_date: released, ...rest } = result;
-          return { name, released, ...rest };
-        } else {
-          const { first_air_date: released, ...rest } = result;
-          return { released, ...rest };
-        }
-      });
-    }
-
-    resultsCopy.forEach((item, i) => {
-      item.id = prefix + item.id;
-      if (prefix === "g") {
-        if (item.platforms === null) {
-          item.platforms = [];
-        } else {
-          let platformsString = [];
-          item.platforms.slice(0, 3).forEach((platform) => {
-            platformsString.push(platform.platform.name);
-          });
-          item.platforms = platformsString;
-        }
-      }
-      if (prefix === "t") {
-        item.released = item.released.slice(0, 4);
-      }
-    });
-
-    setResults(resultsCopy);
-    setLoadingResults(false);
-    isList(true);
-  };
-
   useEffect(() => {
-    if(urlQuery) {
-      console.log(decodeURIComponent(urlQuery))
-      searchByTitle("Enter", urlQuery)
-      setQuery(decodeURIComponent(urlQuery))
+    if (urlQuery) {
+      setQuery(decodeURIComponent(urlQuery));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlQuery])
+  }, [urlQuery]);
+
+  const isKeyDownEnter = (key) => {
+    if(key === "Enter" && query) {
+      searchByTitle(query)
+    }
+  }
 
   return (
     <div>
@@ -142,9 +49,9 @@ const SearchBar = ({
         placeholder="Search..."
         value={query}
         onChange={(e) => updateQuery(e.target.value)}
-        onKeyDown={(e) => searchByTitle(e.key)}
-        {...(setIsListDisplayed && { 
-          onClick: () => setIsListDisplayed(true) 
+        onKeyDown={(e) => isKeyDownEnter(e.key)}
+        {...(setIsListDisplayed && {
+          onClick: () => setIsListDisplayed(true),
         })}
         disabled={loadingResults}
       />

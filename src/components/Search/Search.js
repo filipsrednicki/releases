@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Categories from "../Categories";
 import SearchBar from "./SearchBar";
+import useSearch from "./useSearch";
 import SearchResult from "./SearchResult";
 import SearchError from "./SearchError";
 import "./Search.css";
@@ -12,9 +13,6 @@ import { useDatabase } from "../../context/DatabaseContext";
 
 const Search = () => {
   const [advSearchQuery, setAdvSearchQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [noResults, setNoResults] = useState(false);
-  const [error, setError] = useState(null);
   const [isCategories, setIsCategories] = useState(false);
   const category = useRef("movie");
   const { checkDetails } = useDatabase();
@@ -22,6 +20,17 @@ const Search = () => {
   const searchResults = useRef();
   const classes = ["search-bar", "categories", "show-categories"];
   const [showDropdown, setShowDropdown] = useDropdown(searchResults, classes);
+
+  const {
+    results,
+    setResults,
+    noResults,
+    setNoResults,
+    error,
+    setError,
+    searchByTitle,
+    loadingResults
+  } = useSearch(category.current);
 
   const chooseCategory = (cat) => {
     setNoResults(false);
@@ -46,9 +55,10 @@ const Search = () => {
         setAdvSearchQuery={setAdvSearchQuery}
         setResults={setResults}
         setIsListDisplayed={setShowDropdown}
-        category={category.current}
         setNoResults={setNoResults}
         setError={setError}
+        searchByTitle={searchByTitle}
+        loadingResults={loadingResults}
       />
 
       <span

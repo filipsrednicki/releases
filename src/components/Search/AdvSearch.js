@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
 import SearchError from "./SearchError";
+import useSearch from "./useSearch";
 import Categories from "../Categories";
 import DropdownItem from "../Dropdown/DropdownItem";
 import AddDelBtn from "../AddDelBtn";
@@ -9,15 +10,22 @@ import { useDatabase } from "../../context/DatabaseContext";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 const AdvSearch = () => {
-  const [results, setResults] = useState([]);
-  const [noResults, setNoResults] = useState(false);
-  const [error, setError] = useState(null);
   const { checkDetails } = useDatabase();
-
   const location = useLocation();
   const params = useParams();
   const history = useHistory();
   const category = useRef(params.category || "movie");
+  
+  const {
+    results,
+    setResults,
+    noResults,
+    setNoResults,
+    error,
+    setError,
+    searchByTitle,
+    loadingResults,
+  } = useSearch(category.current);
 
   const chooseCategory = (cat) => {
     setNoResults(false);
@@ -32,16 +40,27 @@ const AdvSearch = () => {
     }
   };
 
+  useEffect(() => {
+    if (
+      location.search.length > 7 &&
+      location.search.slice(0, 7) === "?query="
+    ) {
+      searchByTitle(location.search.slice(7, location.search.length));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="more-results">
       <SearchBar
         setResults={setResults}
-        category={category.current}
         setNoResults={setNoResults}
         setError={setError}
         {...(location.search.slice(0, 7) === "?query=" && {
           urlQuery: location.search.slice(7, location.search.length),
         })}
+        searchByTitle={searchByTitle}
+        loadingResults={loadingResults}
       />
 
       <Categories
