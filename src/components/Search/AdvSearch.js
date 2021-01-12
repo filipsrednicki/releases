@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
 import SearchError from "./SearchError";
@@ -10,6 +10,7 @@ import { useDatabase } from "../../context/DatabaseContext";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 
 const AdvSearch = () => {
+  const [pageNum, setPageNum] = useState(1);
   const { checkDetails } = useDatabase();
   const location = useLocation();
   const params = useParams();
@@ -37,6 +38,7 @@ const AdvSearch = () => {
     category.current = cat;
     if (results.length > 0) {
       setResults([]);
+      setPageNum(1);
     }
   };
 
@@ -49,6 +51,22 @@ const AdvSearch = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const prevPage = () => {
+    searchByTitle(
+      location.search.slice(7, location.search.length),
+      pageNum - 1
+    );
+    setPageNum((num) => num - 1);
+  };
+
+  const nextPage = () => {
+    searchByTitle(
+      location.search.slice(7, location.search.length),
+      pageNum + 1
+    );
+    setPageNum((num) => num + 1);
+  };
 
   return (
     <div className="more-results">
@@ -92,6 +110,16 @@ const AdvSearch = () => {
           </li>
         ))}
       </ul>
+      {pageNum !== 1 && (
+        <span className="previous-page" onClick={prevPage}>
+          Previous page
+        </span>
+      )}
+      {results.length > 0 && pageNum < results.maxPages && (
+        <span className="next-page" onClick={nextPage}>
+          Next page
+        </span>
+      )}
     </div>
   );
 };
