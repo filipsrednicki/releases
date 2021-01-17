@@ -32,6 +32,7 @@ const useSearch = (category, pageSize = 5) => {
       .then((result) => {
         if (result.results.length === 0) {
           setNoResults(true);
+          setResults([]);
           setLoadingResults(false);
         } else {
           setNoResults(false);
