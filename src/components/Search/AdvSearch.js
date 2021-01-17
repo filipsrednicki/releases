@@ -69,9 +69,16 @@ const AdvSearch = () => {
     setPageNum((num) => num + 1);
   };
 
+  let bColor = "#7e2bd1"
+  if(category.current === "tv") {
+    bColor = "#ab5200"
+  } else if (category.current === "game") {
+    bColor = "#2b82d9"
+  }
+
   return (
     <div className="more-results">
-      <div>
+      <div style={{ borderColor: bColor }}>
         <SearchBar
           setResults={setResults}
           setNoResults={setNoResults}
