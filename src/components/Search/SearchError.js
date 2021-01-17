@@ -8,7 +8,7 @@ const SearchError = ({ visible, isCategories, searchRef, children }) => {
     <div
       className="search"
       ref={searchRef}
-      style={isCategories && {
+      style={isCategories !== null && {
         top: isCategories ? "-30px" : "-70px",
         paddingTop: isCategories ? "9px" : "9px",
       }}
