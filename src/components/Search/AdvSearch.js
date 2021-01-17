@@ -8,6 +8,7 @@ import DropdownItem from "../Dropdown/DropdownItem";
 import AddDelBtn from "../AddDelBtn";
 import { useDatabase } from "../../context/DatabaseContext";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import "./Search.css";
 
 const AdvSearch = () => {
   const [pageNum, setPageNum] = useState(1);
@@ -70,22 +71,24 @@ const AdvSearch = () => {
 
   return (
     <div className="more-results">
-      <SearchBar
-        setResults={setResults}
-        setNoResults={setNoResults}
-        setError={setError}
-        {...(location.search.slice(0, 7) === "?query=" && {
-          urlQuery: location.search.slice(7, location.search.length),
-        })}
-        searchByTitle={searchByTitle}
-        loadingResults={loadingResults}
-      />
-
-      <Categories
-        chooseCategory={chooseCategory}
-        name="adv-search-"
-        checked={category.current}
-      />
+      <div>
+        <SearchBar
+          setResults={setResults}
+          setNoResults={setNoResults}
+          setError={setError}
+          {...(location.search.slice(0, 7) === "?query=" && {
+            urlQuery: location.search.slice(7, location.search.length),
+          })}
+          searchByTitle={searchByTitle}
+          loadingResults={loadingResults}
+        />
+        
+        <Categories
+          chooseCategory={chooseCategory}
+          name="adv-search-"
+          checked={category.current}
+        />
+      </div>
 
       <SearchError visible={noResults}>No results found.</SearchError>
 
