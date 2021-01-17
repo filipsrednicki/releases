@@ -122,8 +122,9 @@ const Search = () => {
         <DropdownItem
           path={`/search/${category.current}?query=${advSearchQuery}`}
           handleClick={() => setShowDropdown(false)}
+          name="more-link"
         >
-          More results
+          More results...
         </DropdownItem>
       </Dropdown>
     </div>
