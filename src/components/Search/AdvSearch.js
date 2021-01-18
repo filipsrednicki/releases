@@ -112,6 +112,7 @@ const AdvSearch = () => {
               name="details-link"
               handleClick={() => checkDetails(result.id)}
             >
+              <div className="list-marker" style={{ backgroundColor: bColor }}></div>
               <SearchResult result={result} category={category.current} />
             </DropdownItem>
             <div className="buttons">
