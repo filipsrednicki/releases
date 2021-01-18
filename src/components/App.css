@@ -42,6 +42,12 @@ button:disabled:hover {
   background-color: #797979;
 }
 
+.btn-add, .btn-del, .btn-add > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .btn-add {
   color: #1A1A1D;
   background-color: #f0a211;
