@@ -8,6 +8,7 @@ import DropdownItem from "../Dropdown/DropdownItem";
 import AddDelBtn from "../AddDelBtn";
 import { useDatabase } from "../../context/DatabaseContext";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { scroller } from 'react-scroll'
 import "./Search.css";
 
 const AdvSearch = () => {
@@ -59,6 +60,7 @@ const AdvSearch = () => {
       pageNum - 1
     );
     setPageNum((num) => num - 1);
+    scroller.scrollTo("scroll-el", {smooth: true, offset: -80})
   };
 
   const nextPage = () => {
@@ -67,6 +69,7 @@ const AdvSearch = () => {
       pageNum + 1
     );
     setPageNum((num) => num + 1);
+    scroller.scrollTo("scroll-el", {smooth: true, offset: -80})
   };
 
   let bColor = "#7e2bd1"
@@ -78,7 +81,7 @@ const AdvSearch = () => {
 
   return (
     <div className="more-results">
-      <div style={{ borderColor: bColor }}>
+      <div style={{ borderColor: bColor }} id="scroll-el">
         <SearchBar
           setResults={setResults}
           setNoResults={setNoResults}
