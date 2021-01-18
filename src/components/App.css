@@ -862,6 +862,27 @@ form .alert .error-msg {
   .content-main {
     height: 100%;
   }
+  .more-results {
+    margin-top: -60px;
+  }
+  .more-results > div {
+    width: 80%;
+    padding: 20px;
+  }
+  .more-results .btn-clear {
+    right: calc(10% + 20px);
+  }
+  .adv-search-categories label {
+    margin: 0 5px;
+    font-size: 0.9em;
+  }
+  .more-results ul.search {
+    max-height: 100%;
+  }
+  .more-results li.search {
+    width: 100%;
+    margin: 0 0 8px;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -941,6 +962,21 @@ form .alert .error-msg {
   .settings .alert {
     margin: auto;
   }
+  .more-results > div {
+    width: 100%;
+    padding: 20px 8px;
+  }
+  .more-results .btn-clear {
+    right: 10px;
+  }
+  .adv-search-categories label {
+    margin: 0 2px;
+    font-size: 0.8em;
+  }
+  .more-results ul.search {
+    width: 100%;
+    font-size: 0.8em;
+  }
 }
 
 @media screen and (max-width: 400px) {
@@ -975,5 +1011,8 @@ form .alert .error-msg {
   .upcoming-movies,
   .upcoming-shows {
     margin: 5px 2.5px;
+  }
+  ul li.search {
+    font-size: 0.8em;
   }
 }
