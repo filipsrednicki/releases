@@ -104,9 +104,9 @@ const AdvSearch = () => {
         Error message: {error}
       </SearchError>
 
-      <ul className="adv-search">
+      <ul className="search">
         {results.map((result) => (
-          <li className="adv-search" key={result.id}>
+          <li className="search" key={result.id}>
             <DropdownItem
               path={`/details/${result.id}`}
               name="details-link"
