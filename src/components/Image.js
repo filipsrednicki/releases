@@ -62,6 +62,7 @@ const Image = ({ entry, size = { w: 0, h: 0 }, wrapperW = 100, isGameImg }) => {
         className="placeholder"
         style={{
           opacity: isOpaque(entry.id) ? 0 : 1,
+          animation: isOpaque(entry.id) && "none"
         }}
       ></div>
     </div>
