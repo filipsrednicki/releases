@@ -25,8 +25,7 @@ const App = () => {
       return
     }
     getList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [getList, user]);
 
   return (
     <div className="App">

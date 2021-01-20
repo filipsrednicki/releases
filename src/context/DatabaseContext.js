@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { auth, database } from "../firebase";
 
 const DatabaseContext = React.createContext();
@@ -64,7 +64,7 @@ const DatabaseProvider = (props) => {
     }
   };
 
-  const getList = () => {
+  const getList = useCallback(() => {
     if (!auth.currentUser) {
       return;
     }
@@ -99,7 +99,7 @@ const DatabaseProvider = (props) => {
         getErrorMsg(err.code, false);
         setIsListLoading(false);
       });
-  };
+  }, []);
 
   const add = (entry) => {
     if (!auth.currentUser) {
