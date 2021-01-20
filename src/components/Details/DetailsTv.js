@@ -63,7 +63,7 @@ const DetailsTv = () => {
   return (
     <div className="details-content">
       <div className="info-top">
-        <Image entry={details} width={300} />
+        <Image entry={details} size={{w: 300, h: 450}} />
         <div className="details-title">
           <h1>{details.name} </h1>
           <div>

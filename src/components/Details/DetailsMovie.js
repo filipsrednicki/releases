@@ -30,7 +30,9 @@ const DetailsMovie = () => {
   return (
     <div className="details-content">
       <div className="info-top">
-        <Image entry={details} width={300}/>
+        <div>
+          <Image entry={details} size={{w: 300, h: 450}}/>
+        </div>
         <div className="details-title">
           <h1>{details.title} </h1>
           <div>
