@@ -12,6 +12,7 @@ import Settings from "./Settings";
 import ErrorModal from "./Modal/ErrorModal";
 import ConfirmDelModal from "./Modal/ConfirmDelModal";
 import AdvSearch from "./Search/AdvSearch"
+import LogInAsTest from "./LogInAsTest"
 import { useAuth } from "../context/AuthContext";
 import { useDatabase } from "../context/DatabaseContext";
 import "./App.css";
@@ -35,6 +36,7 @@ const App = () => {
           {authMode && <Authentication/>}
           {errorModal && <ErrorModal/>}
           {deleteEntry && <ConfirmDelModal/>}
+          {!user && <LogInAsTest/>}
           <Switch>
             <Route
               path="/calendar/:date?"
