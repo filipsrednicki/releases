@@ -13,16 +13,11 @@ const Details = () => {
   const { details, checkDetails, error, notFound } = useDatabase();
 
   useEffect(() => {
-    if (details) {
-      if (id === details.id) {
-        return;
-      }
-      checkDetails(id);
-    } else {
-      checkDetails(id);
+    if (details && id === details.id) {
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    checkDetails(id);
+  }, [checkDetails, details, id]);
 
   return (
     <div className="details">
@@ -37,17 +32,19 @@ const Details = () => {
           details.id[0] === "m" && <DetailsMovie />
         )
       ) : notFound ? (
-        <ErrorNotification content={
-          <>
-            <h3>404 Not Found</h3>
-            <p>{notFound}</p>
-          </>
-        }/>
+        <ErrorNotification
+          content={
+            <>
+              <h3>404 Not Found</h3>
+              <p>{notFound}</p>
+            </>
+          }
+        />
       ) : (
         <Loader type="ThreeDots" color="#f0a211" height={120} width={120} />
       )}
     </div>
   );
-}
+};
 
 export default Details;

@@ -239,7 +239,7 @@ const DatabaseProvider = (props) => {
     return onList;
   };
 
-  const checkDetails = (id) => {
+  const checkDetails = useCallback((id) => {
     setDetails("");
     setError(null)
     setDeleteEntry("");
@@ -268,7 +268,7 @@ const DatabaseProvider = (props) => {
       .catch((err) => {
         setError(err.message)
       })
-  };
+  }, []);
 
   return (
     <DatabaseContext.Provider
