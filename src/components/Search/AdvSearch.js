@@ -51,8 +51,7 @@ const AdvSearch = () => {
     ) {
       searchByTitle(location.search.slice(7, location.search.length));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.search, searchByTitle]);
 
   const prevPage = () => {
     searchByTitle(
