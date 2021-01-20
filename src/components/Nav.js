@@ -62,6 +62,10 @@ const Nav = () => {
               onClick={() => setShowDropdown((prevstate) => !prevstate)}
             ></i>
             <Dropdown el="div" dropdownRef={dropdownRef} showDropdown={showDropdown}>
+              <div className="logged-as">
+                <h6>Logged In as:</h6>
+                <div title={user.email}>{user.email}</div>
+              </div>
               <DropdownItem path="/settings" handleClick={() => setShowDropdown(false)}>
                 <i className="fas fa-cog"></i>
                 <span>Settings</span>

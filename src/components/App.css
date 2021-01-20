@@ -163,7 +163,8 @@ button:disabled:hover {
 
 .dropdown {
   position: absolute;
-  width: 130px;
+  min-width: 130px;
+  max-width: 220px;
   padding: 10px 5px;
   right: 0;
   top: 55px;
@@ -171,6 +172,24 @@ button:disabled:hover {
   background-color: #1A1A1D;
   border-radius: 10px;
   box-shadow: 0 0 5px 3px #26262A;
+}
+
+.logged-as {
+  text-align: left;
+  padding: 0 8px 10px;
+  border-bottom: 2px solid #26262a;
+  margin-bottom: 8px;
+}
+
+.logged-as h6 {
+  margin: 0 0 3px;
+}
+
+.logged-as div {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-style: italic;
 }
 
 .dropdown a {
