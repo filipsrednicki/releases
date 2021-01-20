@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useLazyLoad = () => {
+const useLazyLoad = (margin) => {
   const targetRef = useRef();
 
   useEffect(() => {
@@ -18,11 +18,11 @@ const useLazyLoad = () => {
             observer.unobserve(entry.target);
           }
         });
-      }, {});
+      }, { rootMargin: margin});
 
       observer.observe(targetRef.current);
     }
-  }, []);
+  }, [margin]);
 
   return { targetRef };
 };
