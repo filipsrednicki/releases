@@ -22,10 +22,19 @@ const useDropdown = (dropdownRef, classes) => {
       
       setShowDropdown(false);
     };
+    
+    const hideOnEscape = (e) => {
+      if(e.key === "Escape") {
+        setShowDropdown(false);
+      }
+    }
+
     document.addEventListener("mousedown", hideDropdown);
+    document.addEventListener("keydown", hideOnEscape);
 
     return () => {
       document.removeEventListener("mousedown", hideDropdown);
+      document.removeEventListener("keydown", hideOnEscape);
     };
   }, [showDropdown, setShowDropdown, dropdownRef, classes]);
 
