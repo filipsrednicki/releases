@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import CalendarInWeeks from "./CalendarInWeeks";
 import Day from "./Day";
 import ErrorNotification from "../Errors/ErrorNotification";
@@ -48,21 +48,7 @@ const Calendar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (params.date) {
-      const [month, year] = params.date.split("-");
-      const currentDate = new Date(year, month - 1);
-      const monthInfoCopy = getMonthData(currentDate, currentDate.getMonth());
-
-      setMonthInfo(monthInfoCopy);
-      createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
-    } else if (!params.date) {
-      createCurrentMonth();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [list, params.date]);
-
-  const getMonthData = (date, monthNr) => {
+  const getMonthData = useCallback((date, monthNr) => {
     let year = date.getFullYear();
     if (monthNr < 0) {
       monthNr = 11;
@@ -84,62 +70,9 @@ const Calendar = () => {
     monthInfoCopy.daysInMonth = daysInMonth.getDate();
 
     return monthInfoCopy;
-  };
+  }, [monthInfo]);
 
-  const createCurrentMonth = () => {
-    const currentDate = new Date();
-    const monthInfoCopy = getMonthData(currentDate, currentDate.getMonth());
-    setMonthInfo(monthInfoCopy);
-    createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
-  };
-
-  const createMonth = (amountOfDays, firstDay) => {
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const month = [...Array(amountOfDays)];
-    let j = 0;
-
-    for (let i = firstDay; i < daysOfWeek.length; i++) {
-      if (j === amountOfDays) {
-        continue;
-      }
-
-      let suffix = "th";
-      if (j === 0 || j === 20 || j === 30) {
-        suffix = "st";
-      } else if (j === 1 || j === 21) {
-        suffix = "nd";
-      } else if (j === 2 || j === 22) {
-        suffix = "rd";
-      }
-
-      month[j] = {
-        name: daysOfWeek[i],
-        suffix: suffix,
-        content: [],
-        amountOfEntries: {
-          games: 0,
-          tvShows: 0,
-          movies: 0,
-        },
-      };
-      j++;
-
-      if (i === daysOfWeek.length - 1 && j < amountOfDays) {
-        i = -1;
-      }
-    }
-    addContentToMonth(month);
-  };
-
-  const addContentToMonth = (month) => {
+  const addContentToMonth = useCallback((month) => {
     list.forEach((item) => {
       const [year, itemMonth, day] = item.date.split("-")
       const d = new Date(year, itemMonth - 1, day);
@@ -210,7 +143,60 @@ const Calendar = () => {
 
     setMonthInWeeks(monthByWeek);
     setSelectedMonth(month);
-  };
+  }, [list, monthInfo.month, monthInfo.monthName, monthInfo.year]);
+
+  const createMonth = useCallback((amountOfDays, firstDay) => {
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const month = [...Array(amountOfDays)];
+    let j = 0;
+
+    for (let i = firstDay; i < daysOfWeek.length; i++) {
+      if (j === amountOfDays) {
+        continue;
+      }
+
+      let suffix = "th";
+      if (j === 0 || j === 20 || j === 30) {
+        suffix = "st";
+      } else if (j === 1 || j === 21) {
+        suffix = "nd";
+      } else if (j === 2 || j === 22) {
+        suffix = "rd";
+      }
+
+      month[j] = {
+        name: daysOfWeek[i],
+        suffix: suffix,
+        content: [],
+        amountOfEntries: {
+          games: 0,
+          tvShows: 0,
+          movies: 0,
+        },
+      };
+      j++;
+
+      if (i === daysOfWeek.length - 1 && j < amountOfDays) {
+        i = -1;
+      }
+    }
+    addContentToMonth(month);
+  }, [addContentToMonth]);
+
+  const createCurrentMonth = useCallback(() => {
+    const currentDate = new Date();
+    const monthInfoCopy = getMonthData(currentDate, currentDate.getMonth());
+    setMonthInfo(monthInfoCopy);
+    createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
+  }, [createMonth, getMonthData]);
 
   const changeMonth = (direction) => {
     let monthNr = monthInfo.month;
@@ -228,6 +214,21 @@ const Calendar = () => {
     setMonthInfo(monthInfoCopy);
     createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
   };
+
+  useEffect(() => {
+    if (params.date) {
+      console.log('params');
+      const [month, year] = params.date.split("-");
+      const currentDate = new Date(year, month - 1);
+      const monthInfoCopy = getMonthData(currentDate, currentDate.getMonth());
+
+      setMonthInfo(monthInfoCopy);
+      createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
+    } else if (!params.date) {
+      console.log('noparams');
+      createCurrentMonth();
+    }
+  }, [createCurrentMonth, createMonth, getMonthData, list, params.date]);
 
   const openAllDays = () => {
     let daysWithContent = []
