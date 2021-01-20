@@ -37,19 +37,30 @@
   z-index: 1;
 }
 
+.info-top > div:first-of-type {
+  width: 300px;
+  max-width: 95%;
+  margin-bottom: 30px;
+}
+
 .info-top img,
 .info-top > .img-missing {
-  max-width: 300px;
   width: 100%;
   border-radius: 12px;
   z-index: 2;
-  margin-bottom: 30px;
   box-shadow: 0 -2px 8px 5px #1a1a1d;
+  display: block;
+  position: absolute;
 }
 
 .info-top > .img-missing {
   height: max-content;
   font-size: 2em;
+}
+
+.info-top .placeholder {
+  border-radius: 10px;
+  z-index: 3;
 }
 
 .details-title {

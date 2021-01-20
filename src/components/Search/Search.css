@@ -135,7 +135,7 @@ ul.search::-webkit-scrollbar-thumb {
 ul li.search {
   font-size: 1.3em;
   display: grid;
-  grid-template: 90px / 1fr 65px;
+  grid-template: 90px / 1fr 60px;
   align-items: center;
   border-bottom: 1px solid #4f4f4f;
 }
@@ -152,19 +152,26 @@ ul li.search:hover {
 .search-result {
   display: grid;
   width: 100%;
-  grid-template: 1fr / 80px 1fr;
+  height: 100%;
+  grid-template: 1fr / 50px 1fr;
   align-items: center;
+  padding-left: 10px;
 }
 
 .search-result img {
-  align-self: center;
-  margin: 0 auto;
   height: 75px;
+  display: block;
+  position: absolute;
+  border-radius: 4px;
 }
 
-.search-result div {
+.search-result .placeholder {
+  border-radius: 4px;
+}
+
+.search-result > div:last-of-type {
   grid-column: 2 / 2;
-  padding: 0 5px;
+  padding: 0 10px;
 }
 
 .search .details-link {
@@ -259,6 +266,7 @@ ul li.search:hover {
   background-color: transparent;
   width: 90%;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .more-results li.search {
@@ -277,6 +285,10 @@ ul li.search:hover {
 .more-results .details-link {
   flex-direction: row;
   justify-content: flex-start;
+}
+
+.more-results .search-result {
+  grid-template-columns: 60px 1fr;
 }
 
 .more-results .list-marker {

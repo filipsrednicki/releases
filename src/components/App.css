@@ -729,6 +729,32 @@ form .alert .error-msg {
   height: 25px;
 }
 
+.img-wrapper {
+  position: relative;
+  height: 0;
+}
+
+.placeholder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #1d1d1f;
+  transition: opacity 0.3s ease-in;
+  animation: breathing 2.5s infinite;
+}
+
+@keyframes breathing {
+  0% {
+    background-color: #1d1d1f;
+  }
+  50% {
+    background-color: #222225;
+  }
+  100% {
+    background-color: #1d1d1f;
+  }
+}
+
 /***************/
 /* BREAKPOINTS */
 /***************/
