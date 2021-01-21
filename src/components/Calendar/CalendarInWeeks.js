@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import Day from "./Day"
 import EntriesAmount from "./EntriesAmount"
 
-const CalendarInWeeks = ({ monthInWeeks }) => {
+const CalendarInWeeks = memo(({ monthInWeeks }) => {
   const [openWeek, setOpenWeek] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(null);
 
@@ -19,12 +19,13 @@ const CalendarInWeeks = ({ monthInWeeks }) => {
         }
       })
     });
+  }, [monthInWeeks])
 
+  useEffect(() => {
     return () => {
-      setOpenWeek(null)
       document.body.style.overflow = "";
     }
-  }, [monthInWeeks])
+  }, [])
 
   const positionButtons = (index) => {
     if (monthInWeeks[index].length !== 7) {
@@ -111,7 +112,9 @@ const CalendarInWeeks = ({ monthInWeeks }) => {
                   <i className="fas fa-caret-left"></i>
                 </button>
                 <div ref={weekRef}>
-                  <Day arrayOfDays={week}/>    
+                  {week.map((day, i) => (
+                    <Day key={i} day={day} i={i}/>    
+                  ))}
                 </div>
                 <button
                   className="week-btn"
@@ -127,6 +130,6 @@ const CalendarInWeeks = ({ monthInWeeks }) => {
       ))}
     </div>
   );
-};
+});
 
 export default CalendarInWeeks;
