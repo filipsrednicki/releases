@@ -74,11 +74,14 @@ const Calendar = () => {
   const addContentToMonth = useCallback((month) => {
     list.forEach((item) => {
       const [year, itemMonth, day] = item.date.split("-")
-      const d = new Date(year, itemMonth - 1, day);
-      const mName = d.toLocaleString("en-US", { month: "long" });
+      const itemDate = new Date(year, itemMonth - 1, day);
+      const mName = itemDate.toLocaleString("en-US", { month: "long" });
+      const isYearMatching = itemDate.getFullYear() === monthInfo.year;
+      const isMonthMatching = mName === monthInfo.monthName;
+      const dayNum = itemDate.getDate() - 1;
 
-      if (d.getFullYear() === monthInfo.year && mName === monthInfo.monthName) {
-        month[d.getDate() - 1].content.push({
+      if (isYearMatching && isMonthMatching) {
+        month[dayNum].content.push({
           name: item.name,
           date: item.date,
           id: item.id,
@@ -89,60 +92,60 @@ const Calendar = () => {
           dbId: item.dbId,
         });
 
+        const { amountOfEntries } = month[dayNum];
         if (item.id[0] === "g") {
-          month[d.getDate() - 1].amountOfEntries.games++;
+          amountOfEntries.games++;
         } else if (item.id[0] === "t") {
-          month[d.getDate() - 1].amountOfEntries.tvShows++;
+          amountOfEntries.tvShows++;
         } else {
-          month[d.getDate() - 1].amountOfEntries.movies++;
+          amountOfEntries.movies++;
         }
       }
     });
 
-    if (
-      monthInfo.month === currentDay.current.month &&
-      monthInfo.year === currentDay.current.year
-    ) {
+    const isCurrentYear = monthInfo.year === currentDay.current.year;
+    const isCurrentMonth = monthInfo.month === currentDay.current.month;
+
+    if (isCurrentYear && isCurrentMonth) {
       month[currentDay.current.day].current = true;
     }
 
-    let monthByWeek = [];
+    sumOfEntriesInWeek(month)
+    setSelectedMonth(month);
+  }, [list, monthInfo]);
+
+  const sumOfEntriesInWeek = (month) => {
+    const monthByWeek = [];
     let week = [];
-    let amountOfEntries = {
-      games: 0,
-      movies: 0,
-      tvShows: 0,
-    };
+    let games, movies, tvShows = 0;
 
     month.forEach((day, i) => {
       day.dayNum = i + 1;
       week.push(day);
 
-      amountOfEntries.games += +day.amountOfEntries.games;
-      amountOfEntries.tvShows += +day.amountOfEntries.tvShows;
-      amountOfEntries.movies += +day.amountOfEntries.movies;
-      if (day.name === "Sunday" || month.length === i + 1) {
-        if (
-          !amountOfEntries.games &&
-          !amountOfEntries.tvShows &&
-          !amountOfEntries.movies
-        ) {
-          amountOfEntries = null;
+      games += +day.amountOfEntries.games;
+      tvShows += +day.amountOfEntries.tvShows;
+      movies += +day.amountOfEntries.movies;
+
+      const reachedEndOfWeek = day.name === "Sunday";
+      const reachedEndOfMonth = month.length === i + 1;
+      const shouldPushWeek = reachedEndOfWeek || reachedEndOfMonth;
+
+      if (shouldPushWeek) {
+        if (!games && !tvShows && !movies) {
+          week.amountOfEntries = null;
+        } else {
+          week.amountOfEntries = {games, movies, tvShows};
         }
-        week.amountOfEntries = amountOfEntries;
+
         monthByWeek.push(week);
         week = [];
-        amountOfEntries = {
-          games: 0,
-          movies: 0,
-          tvShows: 0,
-        };
+        games = movies = tvShows = 0;
       }
     });
 
     setMonthInWeeks(monthByWeek);
-    setSelectedMonth(month);
-  }, [list, monthInfo.month, monthInfo.monthName, monthInfo.year]);
+  }
 
   const createMonth = useCallback((amountOfDays, firstDay) => {
     const daysOfWeek = [
@@ -155,25 +158,25 @@ const Calendar = () => {
       "Saturday",
     ];
     const month = [...Array(amountOfDays)];
-    let j = 0;
+    let dayNum = 0;
 
     for (let i = firstDay; i < daysOfWeek.length; i++) {
-      if (j === amountOfDays) {
+      if (dayNum === amountOfDays) {
         continue;
       }
 
       let suffix = "th";
-      if (j === 0 || j === 20 || j === 30) {
+      if (dayNum === 0 || dayNum === 20 || dayNum === 30) {
         suffix = "st";
-      } else if (j === 1 || j === 21) {
+      } else if (dayNum === 1 || dayNum === 21) {
         suffix = "nd";
-      } else if (j === 2 || j === 22) {
+      } else if (dayNum === 2 || dayNum === 22) {
         suffix = "rd";
       }
 
-      month[j] = {
+      month[dayNum] = {
         name: daysOfWeek[i],
-        suffix: suffix,
+        suffix,
         content: [],
         amountOfEntries: {
           games: 0,
@@ -181,9 +184,10 @@ const Calendar = () => {
           movies: 0,
         },
       };
-      j++;
+      dayNum++;
 
-      if (i === daysOfWeek.length - 1 && j < amountOfDays) {
+      const reachedLastDayOfWeek = i === daysOfWeek.length - 1;
+      if (reachedLastDayOfWeek && dayNum < amountOfDays) {
         i = -1;
       }
     }
