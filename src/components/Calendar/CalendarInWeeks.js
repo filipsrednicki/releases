@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from "react";
-import EntriesAmount from "./EntriesAmount"
+import EntriesAmount from "./EntriesAmount";
 import OpenedWeek from "./OpenedWeek";
 
 const CalendarInWeeks = memo(({ monthInWeeks }) => {
@@ -11,21 +11,21 @@ const CalendarInWeeks = memo(({ monthInWeeks }) => {
   const nextWeekRef = useRef();
 
   useEffect(() => {
-    setCurrentWeek(null)
+    setCurrentWeek(null);
     monthInWeeks.forEach((week, i) => {
-      week.forEach(day => {
-        if(day.current) {
-          return setCurrentWeek(i)
+      week.forEach((day) => {
+        if (day.current) {
+          return setCurrentWeek(i);
         }
-      })
+      });
     });
-  }, [monthInWeeks])
+  }, [monthInWeeks]);
 
   useEffect(() => {
     return () => {
       document.body.style.overflow = "";
-    }
-  }, [])
+    };
+  }, []);
 
   const positionButtons = (index) => {
     if (monthInWeeks[index].length !== 7) {
@@ -49,8 +49,8 @@ const CalendarInWeeks = memo(({ monthInWeeks }) => {
   };
 
   const onShowWeek = (i) => {
-    if(!monthInWeeks[i].amountOfEntries) {
-      return
+    if (!monthInWeeks[i].amountOfEntries) {
+      return;
     }
     document.body.style.overflow = "hidden";
     setOpenWeek(i);
@@ -82,23 +82,30 @@ const CalendarInWeeks = memo(({ monthInWeeks }) => {
     }
   };
 
+  const rangeOfDaysInWeek = (week) => {
+    if (week.length > 1) {
+      return `${week[0].dayNum + week[0].suffix} - ${
+        week[week.length - 1].dayNum + week[week.length - 1].suffix
+      }`;
+    } else {
+      return week[0].dayNum + week[0].suffix;
+    }
+  };
+
   return (
     <div className="calendar-weeks">
       {monthInWeeks.map((week, i) => (
         <div className="week-container" key={i}>
-          <div className="week" onClick={() => onShowWeek(i)} style={{ color: currentWeek === i ? "#F1C40F" : "#FFF" }}>
+          <div
+            className="week"
+            onClick={() => onShowWeek(i)}
+            style={{ color: currentWeek === i ? "#F1C40F" : "#FFF" }}
+          >
             <h3>Week #{i + 1}</h3>
-            {week.length > 1 ? (
-              <>
-                {week[0].dayNum + week[0].suffix} -{" "}
-                {week[week.length - 1].dayNum + week[week.length - 1].suffix}
-              </>
-            ) : (
-              week[0].dayNum + week[0].suffix
-            )}
-            
+            {rangeOfDaysInWeek(week)}
+
             {week.amountOfEntries && (
-              <EntriesAmount entries={week.amountOfEntries}/>
+              <EntriesAmount entries={week.amountOfEntries} />
             )}
           </div>
           {openWeek === i && (
