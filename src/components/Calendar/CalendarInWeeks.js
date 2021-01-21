@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from "react";
-import Day from "./Day"
 import EntriesAmount from "./EntriesAmount"
+import OpenedWeek from "./OpenedWeek";
 
 const CalendarInWeeks = memo(({ monthInWeeks }) => {
   const [openWeek, setOpenWeek] = useState(null);
@@ -102,29 +102,15 @@ const CalendarInWeeks = memo(({ monthInWeeks }) => {
             )}
           </div>
           {openWeek === i && (
-            <div className="week-modal" onClick={closeWeek}>
-              <div className="week-days">
-                <button
-                  className="week-btn"
-                  ref={prevWeekRef}
-                  onClick={prevWeek}
-                >
-                  <i className="fas fa-caret-left"></i>
-                </button>
-                <div ref={weekRef}>
-                  {week.map((day, i) => (
-                    <Day key={i} day={day} i={i}/>    
-                  ))}
-                </div>
-                <button
-                  className="week-btn"
-                  ref={nextWeekRef}
-                  onClick={nextWeek}
-                >
-                  <i className="fas fa-caret-right"></i>
-                </button>
-              </div>
-            </div>
+            <OpenedWeek
+              week={week}
+              weekRef={weekRef}
+              nextWeek={nextWeek}
+              nextWeekRef={nextWeekRef}
+              prevWeek={prevWeek}
+              prevWeekRef={prevWeekRef}
+              closeWeek={closeWeek}
+            />
           )}
         </div>
       ))}
