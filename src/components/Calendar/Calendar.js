@@ -13,7 +13,6 @@ const Calendar = () => {
   const [monthInWeeks, setMonthInWeeks] = useState("");
   const [isCalendarInWeeks, setIsCalendarInWeeks] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [openDays, setOpenDays] = useState([]);
   const [allDaysOpen, setAllDaysOpen] = useState([]);
 
   const { list, isListLoading, listError } = useDatabase();
@@ -212,12 +211,12 @@ const Calendar = () => {
 
     history.push("/calendar/" + params);
     setMonthInfo(monthInfoCopy);
+    setAllDaysOpen([]);
     createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
   };
 
   useEffect(() => {
     if (params.date) {
-      console.log('params');
       const [month, year] = params.date.split("-");
       const currentDate = new Date(year, month - 1);
       const monthInfoCopy = getMonthData(currentDate, currentDate.getMonth());
@@ -225,7 +224,6 @@ const Calendar = () => {
       setMonthInfo(monthInfoCopy);
       createMonth(monthInfoCopy.daysInMonth, monthInfoCopy.firstDayOfMonth);
     } else if (!params.date) {
-      console.log('noparams');
       createCurrentMonth();
     }
   }, [createCurrentMonth, createMonth, getMonthData, list, params.date]);
@@ -239,6 +237,14 @@ const Calendar = () => {
     })
     setAllDaysOpen(daysWithContent)
   }
+
+  const removeFromAllDays = useCallback((i) => {
+    setAllDaysOpen((prevState) => prevState.filter((dayNum) => dayNum !== i));
+  }, [setAllDaysOpen])
+
+  const addToAllDays = useCallback((i) => {
+    setAllDaysOpen((prevState) => prevState.concat(i));
+  }, [setAllDaysOpen])
 
   return (
     <div className="calendar">
@@ -277,7 +283,17 @@ const Calendar = () => {
             <CalendarInWeeks monthInWeeks={monthInWeeks} />
           ) : (
             <div className="month-container" ref={monthRef}>
-              <Day arrayOfDays={selectedMonth} monthInfo={monthInfo} openDays={openDays} setOpenDays={setOpenDays} allDaysOpen={allDaysOpen} setAllDaysOpen={setAllDaysOpen}/>
+              {selectedMonth.map((day, i) => (
+                <Day 
+                  key={i}
+                  day={day}
+                  i={i}
+                  monthInfo={monthInfo} 
+                  isInAllDays={allDaysOpen.includes(i) ? true : false} 
+                  removeFromAllDays={removeFromAllDays}
+                  addToAllDays={addToAllDays}
+                />
+              ))}
             </div>
           )}
         </>
