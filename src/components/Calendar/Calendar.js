@@ -47,77 +47,85 @@ const Calendar = () => {
     };
   }, []);
 
-  const getMonthData = useCallback((date, monthNr) => {
-    let year = date.getFullYear();
-    if (monthNr < 0) {
-      monthNr = 11;
-      year--;
-    } else if (monthNr > 11) {
-      monthNr = 0;
-      year++;
-    }
-
-    const daysInMonth = new Date(year, monthNr + 1, 0);
-    const firstDayOfMonth = new Date(year, monthNr, 1);
-    const monthName = daysInMonth.toLocaleString("en-US", { month: "long" });
-    const monthInfoCopy = monthInfo;
-
-    monthInfoCopy.year = year;
-    monthInfoCopy.month = monthNr;
-    monthInfoCopy.monthName = monthName;
-    monthInfoCopy.firstDayOfMonth = firstDayOfMonth.getDay();
-    monthInfoCopy.daysInMonth = daysInMonth.getDate();
-
-    return monthInfoCopy;
-  }, [monthInfo]);
-
-  const addContentToMonth = useCallback((month) => {
-    list.forEach((item) => {
-      const [year, itemMonth, day] = item.date.split("-")
-      const itemDate = new Date(year, itemMonth - 1, day);
-      const mName = itemDate.toLocaleString("en-US", { month: "long" });
-      const isYearMatching = itemDate.getFullYear() === monthInfo.year;
-      const isMonthMatching = mName === monthInfo.monthName;
-      const dayNum = itemDate.getDate() - 1;
-
-      if (isYearMatching && isMonthMatching) {
-        month[dayNum].content.push({
-          name: item.name,
-          date: item.date,
-          id: item.id,
-          epId: item.epId,
-          epNum:
-            item.season && `Season ${item.season} | Episode ${item.episode}`,
-          genres: item.genres,
-          dbId: item.dbId,
-        });
-
-        const { amountOfEntries } = month[dayNum];
-        if (item.id[0] === "g") {
-          amountOfEntries.games++;
-        } else if (item.id[0] === "t") {
-          amountOfEntries.tvShows++;
-        } else {
-          amountOfEntries.movies++;
-        }
+  const getMonthData = useCallback(
+    (date, monthNr) => {
+      let year = date.getFullYear();
+      if (monthNr < 0) {
+        monthNr = 11;
+        year--;
+      } else if (monthNr > 11) {
+        monthNr = 0;
+        year++;
       }
-    });
 
-    const isCurrentYear = monthInfo.year === currentDay.current.year;
-    const isCurrentMonth = monthInfo.month === currentDay.current.month;
+      const daysInMonth = new Date(year, monthNr + 1, 0);
+      const firstDayOfMonth = new Date(year, monthNr, 1);
+      const monthName = daysInMonth.toLocaleString("en-US", { month: "long" });
+      const monthInfoCopy = monthInfo;
 
-    if (isCurrentYear && isCurrentMonth) {
-      month[currentDay.current.day].current = true;
-    }
+      monthInfoCopy.year = year;
+      monthInfoCopy.month = monthNr;
+      monthInfoCopy.monthName = monthName;
+      monthInfoCopy.firstDayOfMonth = firstDayOfMonth.getDay();
+      monthInfoCopy.daysInMonth = daysInMonth.getDate();
 
-    sumOfEntriesInWeek(month)
-    setSelectedMonth(month);
-  }, [list, monthInfo]);
+      return monthInfoCopy;
+    },
+    [monthInfo]
+  );
+
+  const addContentToMonth = useCallback(
+    (month) => {
+      list.forEach((item) => {
+        const [year, itemMonth, day] = item.date.split("-");
+        const itemDate = new Date(year, itemMonth - 1, day);
+        const mName = itemDate.toLocaleString("en-US", { month: "long" });
+        const isYearMatching = itemDate.getFullYear() === monthInfo.year;
+        const isMonthMatching = mName === monthInfo.monthName;
+        const dayNum = itemDate.getDate() - 1;
+
+        if (isYearMatching && isMonthMatching) {
+          month[dayNum].content.push({
+            name: item.name,
+            date: item.date,
+            id: item.id,
+            epId: item.epId,
+            epNum:
+              item.season && `Season ${item.season} | Episode ${item.episode}`,
+            genres: item.genres,
+            dbId: item.dbId,
+          });
+
+          const { amountOfEntries } = month[dayNum];
+          if (item.id[0] === "g") {
+            amountOfEntries.games++;
+          } else if (item.id[0] === "t") {
+            amountOfEntries.tvShows++;
+          } else {
+            amountOfEntries.movies++;
+          }
+        }
+      });
+
+      const isCurrentYear = monthInfo.year === currentDay.current.year;
+      const isCurrentMonth = monthInfo.month === currentDay.current.month;
+
+      if (isCurrentYear && isCurrentMonth) {
+        month[currentDay.current.day].current = true;
+      }
+
+      sumOfEntriesInWeek(month);
+      setSelectedMonth(month);
+    },
+    [list, monthInfo]
+  );
 
   const sumOfEntriesInWeek = (month) => {
     const monthByWeek = [];
     let week = [];
-    let games, movies, tvShows = 0;
+    let games,
+      movies,
+      tvShows = 0;
 
     month.forEach((day, i) => {
       day.dayNum = i + 1;
@@ -135,7 +143,7 @@ const Calendar = () => {
         if (!games && !tvShows && !movies) {
           week.amountOfEntries = null;
         } else {
-          week.amountOfEntries = {games, movies, tvShows};
+          week.amountOfEntries = { games, movies, tvShows };
         }
 
         monthByWeek.push(week);
@@ -145,54 +153,57 @@ const Calendar = () => {
     });
 
     setMonthInWeeks(monthByWeek);
-  }
+  };
 
-  const createMonth = useCallback((amountOfDays, firstDay) => {
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const month = [...Array(amountOfDays)];
-    let dayNum = 0;
+  const createMonth = useCallback(
+    (amountOfDays, firstDay) => {
+      const daysOfWeek = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      const month = [...Array(amountOfDays)];
+      let dayNum = 0;
 
-    for (let i = firstDay; i < daysOfWeek.length; i++) {
-      if (dayNum === amountOfDays) {
-        continue;
+      for (let i = firstDay; i < daysOfWeek.length; i++) {
+        if (dayNum === amountOfDays) {
+          continue;
+        }
+
+        let suffix = "th";
+        if (dayNum === 0 || dayNum === 20 || dayNum === 30) {
+          suffix = "st";
+        } else if (dayNum === 1 || dayNum === 21) {
+          suffix = "nd";
+        } else if (dayNum === 2 || dayNum === 22) {
+          suffix = "rd";
+        }
+
+        month[dayNum] = {
+          name: daysOfWeek[i],
+          suffix,
+          content: [],
+          amountOfEntries: {
+            games: 0,
+            tvShows: 0,
+            movies: 0,
+          },
+        };
+        dayNum++;
+
+        const reachedLastDayOfWeek = i === daysOfWeek.length - 1;
+        if (reachedLastDayOfWeek && dayNum < amountOfDays) {
+          i = -1;
+        }
       }
-
-      let suffix = "th";
-      if (dayNum === 0 || dayNum === 20 || dayNum === 30) {
-        suffix = "st";
-      } else if (dayNum === 1 || dayNum === 21) {
-        suffix = "nd";
-      } else if (dayNum === 2 || dayNum === 22) {
-        suffix = "rd";
-      }
-
-      month[dayNum] = {
-        name: daysOfWeek[i],
-        suffix,
-        content: [],
-        amountOfEntries: {
-          games: 0,
-          tvShows: 0,
-          movies: 0,
-        },
-      };
-      dayNum++;
-
-      const reachedLastDayOfWeek = i === daysOfWeek.length - 1;
-      if (reachedLastDayOfWeek && dayNum < amountOfDays) {
-        i = -1;
-      }
-    }
-    addContentToMonth(month);
-  }, [addContentToMonth]);
+      addContentToMonth(month);
+    },
+    [addContentToMonth]
+  );
 
   const createCurrentMonth = useCallback(() => {
     const currentDate = new Date();
@@ -233,22 +244,28 @@ const Calendar = () => {
   }, [createCurrentMonth, createMonth, getMonthData, list, params.date]);
 
   const openAllDays = () => {
-    let daysWithContent = []
+    let daysWithContent = [];
     selectedMonth.forEach((day, i) => {
-      if(day.content.length > 0) {
-        daysWithContent.push(i)
+      if (day.content.length > 0) {
+        daysWithContent.push(i);
       }
-    })
-    setAllDaysOpen(daysWithContent)
-  }
+    });
+    setAllDaysOpen(daysWithContent);
+  };
 
-  const removeFromAllDays = useCallback((i) => {
-    setAllDaysOpen((prevState) => prevState.filter((dayNum) => dayNum !== i));
-  }, [setAllDaysOpen])
+  const removeFromAllDays = useCallback(
+    (i) => {
+      setAllDaysOpen((prevState) => prevState.filter((dayNum) => dayNum !== i));
+    },
+    [setAllDaysOpen]
+  );
 
-  const addToAllDays = useCallback((i) => {
-    setAllDaysOpen((prevState) => prevState.concat(i));
-  }, [setAllDaysOpen])
+  const addToAllDays = useCallback(
+    (i) => {
+      setAllDaysOpen((prevState) => prevState.concat(i));
+    },
+    [setAllDaysOpen]
+  );
 
   return (
     <div className="calendar">
@@ -266,8 +283,12 @@ const Calendar = () => {
 
       {(!isCalendarInWeeks || windowWidth > 800) && (
         <>
-          <button className="open-all" onClick={openAllDays}>Open All</button>        
-          <button className="close-all" onClick={() => setAllDaysOpen([])}>Close All</button>     
+          <button className="open-all" onClick={openAllDays}>
+            Open All
+          </button>
+          <button className="close-all" onClick={() => setAllDaysOpen([])}>
+            Close All
+          </button>
         </>
       )}
 
@@ -282,18 +303,18 @@ const Calendar = () => {
         <Loader type="ThreeDots" color="#f0a211" height={120} width={120} />
       ) : (
         <>
-          {listError && <ErrorNotification errMsg={listError}/>}
+          {listError && <ErrorNotification errMsg={listError} />}
           {isCalendarInWeeks && windowWidth <= 800 ? (
             <CalendarInWeeks monthInWeeks={monthInWeeks} />
           ) : (
             <div className="month-container" ref={monthRef}>
               {selectedMonth.map((day, i) => (
-                <Day 
+                <Day
                   key={i}
                   day={day}
                   i={i}
-                  monthInfo={monthInfo} 
-                  isInAllDays={allDaysOpen.includes(i) ? true : false} 
+                  monthInfo={monthInfo}
+                  isInAllDays={allDaysOpen.includes(i) ? true : false}
                   removeFromAllDays={removeFromAllDays}
                   addToAllDays={addToAllDays}
                 />
