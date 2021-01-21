@@ -1,12 +1,10 @@
 import React, { memo, useEffect, useState } from "react";
 import EntriesAmount from "./EntriesAmount";
-import { Link } from "react-router-dom";
-import { useDatabase } from "../../context/DatabaseContext";
+import ContentEntry from "./ContentEntry";
 
 const Day = memo(
   ({ day, i, monthInfo, isInAllDays, addToAllDays, removeFromAllDays }) => {
     const [isDayOpen, setIsDayOpen] = useState(false);
-    const { setDeleteEntry } = useDatabase();
 
     useEffect(() => {
       if (!isInAllDays) {
@@ -56,24 +54,8 @@ const Day = memo(
 
         {shouldOpen && (
           <div className="day-content-container">
-            {day.content.map((entry) => (
-              <div
-                className={`day-content ${entry.id[0]}-content`}
-                key={entry.epId ? entry.epId : entry.id}
-              >
-                <Link to={`/details/${entry.id}`} className="details-link">
-                  <h4>{entry.name}</h4>
-                  <span>{entry.epNum}</span>
-                  <span>{entry.genres}</span>
-                </Link>
-
-                <button
-                  className="btn-del-calendar"
-                  onClick={() => setDeleteEntry(entry)}
-                >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
+            {day.content.map((entry, i) => (
+              <ContentEntry entry={entry} key={i} />
             ))}
           </div>
         )}
